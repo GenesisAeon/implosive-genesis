@@ -1,19 +1,19 @@
 # Templates
 
-Diamond Setup ships two built-in templates. Adding your own is a single Python file.
+Implosive Genesis liefert zwei eingebaute Templates. Eigene Templates lassen sich mit einer einzigen Python-Datei hinzufügen.
 
 ---
 
 ## `minimal`
 
-**The default.** A clean, modern Python project with everything you need and nothing you don't.
+**Der Standard.** Ein sauberes, modernes Python-Projekt mit allem Notwendigen.
 
 ```bash
-diamond scaffold my-lib
-diamond scaffold my-lib --template minimal
+ig scaffold my-lib
+ig scaffold my-lib --template minimal
 ```
 
-### Files generated
+### Generierte Dateien
 
 ```
 my-lib/
@@ -32,71 +32,71 @@ my-lib/
 └── .pre-commit-config.yaml
 ```
 
-### Variables
+### Variablen
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `name` | *(required)* | Project name |
-| `description` | `"A Python project"` | Short description |
-| `author` | `"Your Name"` | Author name |
-| `python_version` | `"3.11"` | Minimum Python version |
+| Variable | Standard | Beschreibung |
+|----------|---------|--------------|
+| `name` | *(Pflichtfeld)* | Projektname |
+| `description` | `"A Python project"` | Kurzbeschreibung |
+| `author` | `"Your Name"` | Autorenname |
+| `python_version` | `"3.11"` | Minimale Python-Version |
 
 ---
 
 ## `genesis`
 
-A superset of `minimal` — adds a `domains.yaml` for domain/metric configuration and an `entropy-table` YAML bridge module.
+Eine Erweiterung von `minimal` – fügt eine `domains.yaml` für Domain/Metrik-Konfiguration und ein Entropietabellen-Bridge-Modul hinzu.
 
 ```bash
-diamond scaffold my-physics-tool --template genesis
+ig scaffold my-physics-tool --template genesis
 ```
 
-### Extra files
+### Zusätzliche Dateien
 
 ```
 my-physics-tool/
-├── domains.yaml           ← domain/metric configuration
+├── domains.yaml           ← Domain/Metrik-Konfiguration
 ├── config/
-│   └── entropy.yaml       ← entropy-table bridge config
+│   └── entropy.yaml       ← Entropietabellen-Bridge-Konfiguration
 └── src/
     └── my_physics_tool/
         ├── __init__.py
-        └── bridge.py      ← entropy-table export function
+        └── bridge.py      ← Entropietabellen-Export-Funktion
 ```
 
-### Extra variables
+### Zusätzliche Variablen
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `metrics` | `"crep"` | Default metrics identifier |
+| Variable | Standard | Beschreibung |
+|----------|---------|--------------|
+| `metrics` | `"crep"` | Standard-Metrikkürzel |
 
 ---
 
-## Adding a Custom Template
+## Eigenes Template hinzufügen
 
-1. Create `src/diamond_setup/templates/my_template.py`:
+1. Datei `src/implosive_genesis/templates/my_template.py` erstellen:
 
 ```python
 TEMPLATE = {
     "name": "my_template",
-    "description": "My custom template",
+    "description": "Mein eigenes Template",
     "variables": ["name", "description", "author", "python_version"],
     "defaults": {
-        "description": "My project",
+        "description": "Ein Python-Projekt",
         "author": "Your Name",
         "python_version": "3.11",
     },
     "files": {
         "README.md": "# ${name}\n\n${description}\n",
         "pyproject.toml": "...",
-        # keys are relative paths, values are template strings
-        # use ${variable} for substitution
-        # use $$ for a literal dollar sign
+        # Schlüssel = relative Pfade, Werte = Template-Strings
+        # ${variable} für Substitution
+        # $$ für ein wörtliches Dollarzeichen
     },
 }
 ```
 
-2. Register it in `src/diamond_setup/templates/__init__.py`:
+2. In `src/implosive_genesis/templates/__init__.py` registrieren:
 
 ```python
 from .my_template import TEMPLATE as MY_TEMPLATE
@@ -104,8 +104,8 @@ from .my_template import TEMPLATE as MY_TEMPLATE
 REGISTRY: dict[str, dict] = {
     "minimal": MINIMAL_TEMPLATE,
     "genesis": GENESIS_TEMPLATE,
-    "my_template": MY_TEMPLATE,  # ← add this
+    "my_template": MY_TEMPLATE,  # ← hier hinzufügen
 }
 ```
 
-That's it. `diamond list-templates` will immediately show it.
+`ig list-templates` zeigt das neue Template sofort an.

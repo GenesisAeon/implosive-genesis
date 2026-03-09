@@ -3,6 +3,7 @@ site_description: Rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OI
 site_author: GenesisAeon
 repo_url: https://github.com/GenesisAeon/implosive-genesis
 repo_name: GenesisAeon/implosive-genesis
+docs_dir: docs
 
 theme:
   name: material
@@ -36,12 +37,24 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - attr_list
+  - md_in_html
+  - tables
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css: []
 
 nav:
   - Home: index.md
-  - CLI Reference: cli.md
-  - Templates: templates.md
   - Theorie:
     - Frame-Prinzip: theory/frameprinciple.md
     - OIPK: theory/oipk.md
     - Tesseract & CREP: theory/tesseract.md
+  - API-Referenz: api.md
+  - Beispiele: examples.md
+  - CLI Reference: cli.md
+  - Templates: templates.md
