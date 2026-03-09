@@ -1,4 +1,4 @@
-"""Diamond Setup CLI — scaffold, validate and inspect project templates."""
+"""Implosive Genesis CLI – scaffold, validate and inspect project templates."""
 
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ from .templates import REGISTRY
 from .validator import validate as _validate
 
 app = typer.Typer(
-    name="diamond",
-    help="Universal Python project scaffold — create professional skeletons in seconds.",
+    name="ig",
+    help="Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein.",
     add_completion=True,
     rich_markup_mode="rich",
 )
@@ -52,16 +52,16 @@ def scaffold(
 
     Examples:
 
-      diamond scaffold my-tool
+      ig scaffold my-tool
 
-      diamond scaffold my-tool --template genesis --author "Ada Lovelace"
+      ig scaffold my-tool --template genesis --author "Ada Lovelace"
 
-      diamond scaffold my-tool --dry-run
+      ig scaffold my-tool --dry-run
     """
     if template not in REGISTRY:
         err_console.print(
             f"[red]Unknown template '[bold]{template}[/bold]'. "
-            f"Run [bold]diamond list-templates[/bold] to see available options.[/red]"
+            f"Run [bold]ig list-templates[/bold] to see available options.[/red]"
         )
         raise typer.Exit(code=1)
 
@@ -143,7 +143,7 @@ def list_templates() -> None:
 def validate(
     path: Annotated[Path | None, typer.Argument(help="Project directory to validate")] = None,
 ) -> None:
-    """Validate a project directory against diamond-setup best practices."""
+    """Validate a project directory against implosive-genesis best practices."""
     target = path or Path.cwd()
     result = _validate(target)
 
@@ -171,8 +171,8 @@ def validate(
 
 @app.command()
 def version() -> None:
-    """Show the diamond-setup version."""
-    console.print(f"diamond-setup [bold]{__version__}[/bold]")
+    """Show the implosive-genesis version."""
+    console.print(f"implosive-genesis [bold]{__version__}[/bold]")
 
 
 # ---------------------------------------------------------------------------

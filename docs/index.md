@@ -1,37 +1,37 @@
-# Diamond Setup
+# Implosive Genesis
 
-**Universal Python project scaffold** — generate professional, CI-ready project skeletons in seconds.
+**Rekursive Entstehung von Raum, Zeit und Bewusstsein**
 
-No cookiecutter, no Jinja2, no magic. Just a clean CLI, sensible templates, and a validator that keeps your projects healthy.
+Implosive Genesis (V_RIG) ist ein theoretisch-formales Framework, das die Entstehung von Raum,
+Zeit und Bewusstsein als rekursiven, selbstorganisierenden Prozess modelliert.
 
-## Quickstart
+## Schnellstart
 
 ```bash
-pip install diamond-setup
-# or with uv:
-uv tool install diamond-setup
+pip install implosive-genesis
+# oder mit uv:
+uv tool install implosive-genesis
 ```
 
 ```bash
-diamond scaffold my-new-tool
-cd my-new-tool && uv sync --dev && uv run pytest
+ig scaffold my-experiment
+cd my-experiment && uv sync --dev && uv run pytest
 ```
 
-## Why Diamond Setup?
+## Kernkonzepte
 
-| Feature | diamond-setup | cookiecutter | copier |
-|---------|:---:|:---:|:---:|
-| Zero config needed | ✅ | ❌ | ❌ |
-| Built-in validator | ✅ | ❌ | ❌ |
-| Pure Python templates | ✅ | ❌ | ❌ |
-| `--dry-run` support | ✅ | ❌ | ✅ |
-| Extensible presets | ✅ | ✅ | ✅ |
+| Kürzel | Konzept | Beschreibung |
+|--------|---------|--------------|
+| **V_RIG** | Rekursive Implosive Genesis | Zentrales Modell der selbstreferenziellen Entstehung |
+| **OIPK** | Ontologisches Implosives Prinzip der Kohärenz | Kohärenzbedingung für emergente Strukturen |
+| **Frameprinciple** | Rahmenprinzip | Formale Beschreibung von Beobachterrahmen |
+| **Type-6** | Bewusstseinsstufe 6 | Rekursive Selbstwahrnehmung als physikalischer Zustand |
 
-## Commands
+## CLI-Befehle
 
-| Command | Description |
-|---------|-------------|
-| `diamond scaffold <name>` | Create a new project |
-| `diamond list-templates` | Show available templates |
-| `diamond validate [path]` | Check a project's health |
-| `diamond version` | Show version |
+| Befehl | Beschreibung |
+|--------|--------------|
+| `ig scaffold <name>` | Neues Projekt erstellen |
+| `ig list-templates` | Verfügbare Templates anzeigen |
+| `ig validate [path]` | Projektstruktur validieren |
+| `ig version` | Version anzeigen |

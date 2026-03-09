@@ -35,7 +35,6 @@ def _build_context(project_name: str, template: dict, overrides: dict) -> dict[s
 
 def _render(content: str, ctx: dict[str, str]) -> str:
     """Render a template string using Python's string.Template (safe_substitute)."""
-    # First pass: render path-embedded variables (e.g. ${name_snake} in file keys)
     return Template(content).safe_substitute(ctx)
 
 
@@ -65,7 +64,6 @@ def scaffold(
     written: list[Path] = []
 
     for raw_path, raw_content in template["files"].items():
-        # Render the path itself (e.g. src/${name_snake}/__init__.py)
         rel_path = Path(_render(raw_path, ctx))
         abs_path = project_root / rel_path
 

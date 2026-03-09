@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from diamond_setup.validator import validate
+from implosive_genesis.validator import validate
 
 
 def test_validate_nonexistent_path():
@@ -47,8 +47,8 @@ def test_validate_full_project(tmp_path):
     assert len(result.warnings) == 0
 
 
-def test_validate_diamond_own_repo():
-    """diamond-setup's own repository must pass validation."""
+def test_validate_own_repo():
+    """implosive-genesis's own repository must pass validation."""
     repo_root = Path(__file__).parent.parent
     result = validate(repo_root)
     assert result.ok, f"Errors: {result.errors}"

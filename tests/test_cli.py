@@ -4,8 +4,8 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from diamond_setup.cli import app
-from diamond_setup.templates import REGISTRY
+from implosive_genesis.cli import app
+from implosive_genesis.templates import REGISTRY
 
 runner = CliRunner()
 
@@ -13,7 +13,7 @@ runner = CliRunner()
 def test_version():
     result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
-    assert "1.0.0" in result.output
+    assert "0.1.0" in result.output
 
 
 def test_list_templates():
@@ -81,8 +81,7 @@ def test_scaffold_with_overrides(tmp_path):
 
 
 def test_validate_current_project():
-    """Running validate on diamond-setup's own root should pass."""
-    # Find the repo root (parent of tests/)
+    """Running validate on implosive-genesis's own root should pass."""
     repo_root = Path(__file__).parent.parent
     result = runner.invoke(app, ["validate", str(repo_root)])
     assert result.exit_code == 0, result.output

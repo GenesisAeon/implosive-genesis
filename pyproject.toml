@@ -1,21 +1,21 @@
 [project]
-name = "diamond-setup"
-version = "1.0.0"
-description = "Universal Python project scaffold — generate professional project skeletons in seconds"
+name = "implosive-genesis"
+version = "0.1.0"
+description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6)"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "GenesisAeon" }]
 requires-python = ">=3.11"
-keywords = ["scaffold", "template", "cli", "project-generator", "skeleton"]
+keywords = ["physics", "consciousness", "recursion", "spacetime", "implosion", "genesis"]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
-    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Software Development :: Code Generators",
+    "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [
     "typer>=0.12.0",
@@ -37,18 +37,18 @@ dev = [
 ]
 
 [project.scripts]
-diamond = "diamond_setup.cli:app"
+ig = "implosive_genesis.cli:app"
 
 [project.urls]
-Repository = "https://github.com/GenesisAeon/diamond-setup"
-Issues = "https://github.com/GenesisAeon/diamond-setup/issues"
+Repository = "https://github.com/GenesisAeon/implosive-genesis"
+Issues = "https://github.com/GenesisAeon/implosive-genesis/issues"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/diamond_setup"]
+packages = ["src/implosive_genesis"]
 
 [tool.ruff]
 line-length = 100
@@ -63,7 +63,7 @@ ignore = ["B008"]  # typer uses function calls in defaults
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=diamond_setup --cov-report=term-missing -v"
+addopts = "--cov=implosive_genesis --cov-report=term-missing -v"
 
 [tool.coverage.run]
 source = ["src"]
