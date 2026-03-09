@@ -5,8 +5,11 @@
 [![CI](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
 [![PyPI](https://img.shields.io/pypi/v/implosive-genesis)](https://pypi.org/project/implosive-genesis/)
+
+**DOI**: [10.5281/zenodo.18930089](https://doi.org/10.5281/zenodo.18930089)
+**Dokumentation**: [genesisaeon.github.io/implosive-genesis](https://genesisaeon.github.io/implosive-genesis/)
 
 ---
 
