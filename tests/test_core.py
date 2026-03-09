@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import math
-from typing import Any
 
 import pytest
 from typer.testing import CliRunner
@@ -371,9 +370,7 @@ class TestType6Implosive:
         """response = sigmoid_only + jump_only."""
         model = Type6Implosive(steepness=0.8, threshold=0.5, amplitude=1.5)
         for x in [-2.0, 0.0, 1.0, 3.0]:
-            assert math.isclose(
-                model.response(x), model.sigmoid_only(x) + model.jump_only(x)
-            )
+            assert math.isclose(model.response(x), model.sigmoid_only(x) + model.jump_only(x))
 
 
 # ===========================================================================

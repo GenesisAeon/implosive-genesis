@@ -11,9 +11,9 @@ from rich.panel import Panel
 from rich.table import Table
 
 from . import __version__
-from .core.vrig import V_RIG_KMS, compute_vrig
-from .core.type6 import Type6Implosive
 from .core.physics import PHI
+from .core.type6 import Type6Implosive
+from .core.vrig import V_RIG_KMS, compute_vrig
 from .preset import scaffold as _scaffold
 from .templates import REGISTRY
 from .validator import validate as _validate
@@ -185,12 +185,8 @@ def version() -> None:
 
 @app.command(name="vrig-calc")
 def vrig_calc(
-    beta0: Annotated[
-        float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")
-    ] = 1.0,
-    n: Annotated[
-        int, typer.Option("--n", help="Phi-Skalierungsstufe für β_n")
-    ] = 3,
+    beta0: Annotated[float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")] = 1.0,
+    n: Annotated[int, typer.Option("--n", help="Phi-Skalierungsstufe für β_n")] = 3,
     samples: Annotated[
         int, typer.Option("--samples", "-s", help="Anzahl Monte-Carlo-Samples")
     ] = 10_000,
@@ -217,8 +213,7 @@ def vrig_calc(
 
     console.print(
         Panel(
-            f"[bold cyan]V_RIG Berechnung[/bold cyan]  "
-            f"(β₀={beta0}, n={n}, Φ={PHI:.6f})",
+            f"[bold cyan]V_RIG Berechnung[/bold cyan]  (β₀={beta0}, n={n}, Φ={PHI:.6f})",
             expand=False,
         )
     )
@@ -259,9 +254,7 @@ def type6_sim(
     ] = 1.0,
     xmin: Annotated[float, typer.Option("--xmin", help="Untere Grenze des x-Bereichs")] = -3.0,
     xmax: Annotated[float, typer.Option("--xmax", help="Obere Grenze des x-Bereichs")] = 3.0,
-    steps: Annotated[
-        int, typer.Option("--steps", help="Anzahl der Simulationsschritte")
-    ] = 11,
+    steps: Annotated[int, typer.Option("--steps", help="Anzahl der Simulationsschritte")] = 11,
 ) -> None:
     """[bold]Simuliere UTAC Type-6[/bold] Implosive Singularität.
 

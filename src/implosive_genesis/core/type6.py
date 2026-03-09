@@ -100,9 +100,7 @@ class Type6Implosive:
             x, self.threshold, self.amplitude
         )
 
-    def simulate(
-        self, x_range: tuple[float, float], steps: int = 100
-    ) -> list[tuple[float, float]]:
+    def simulate(self, x_range: tuple[float, float], steps: int = 100) -> list[tuple[float, float]]:
         """Simuliere Type-6-Antwort über ein x-Intervall.
 
         Args:
@@ -123,7 +121,9 @@ class Type6Implosive:
             return [(x_start, self.response(x_start))]
 
         step_size = (x_end - x_start) / (steps - 1)
-        return [(x_start + i * step_size, self.response(x_start + i * step_size)) for i in range(steps)]
+        return [
+            (x_start + i * step_size, self.response(x_start + i * step_size)) for i in range(steps)
+        ]
 
     def critical_point(self) -> float:
         """Gib den kritischen Punkt (threshold) zurück, an dem der Sprung auftritt.

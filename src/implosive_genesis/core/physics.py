@@ -10,7 +10,7 @@ skaliert der Kopplungsparameter β_n gemäß der obigen Formel.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 __all__ = ["PHI", "PhiScaling"]
 
