@@ -320,9 +320,7 @@ def simulate(
     temperature: Annotated[
         float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin (CMB = 2.725 K)")
     ] = 2.725,
-    t_0: Annotated[
-        float, typer.Option("--t0", help="Grundzeitscheibe t₀ (normiert)")
-    ] = 1.0,
+    t_0: Annotated[float, typer.Option("--t0", help="Grundzeitscheibe t₀ (normiert)")] = 1.0,
 ) -> None:
     """[bold]Implosive Genesis Simulation[/bold] – Phi-skalierte Zeitevolution.
 
