@@ -1,84 +1,99 @@
-# diamond-setup
+# Implosive Genesis
 
-**Universal Python project scaffold** — generate professional, CI-ready skeletons in seconds.
+**Rekursive Entstehung von Raum, Zeit und Bewusstsein**
 
-[![CI](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml)
+[![CI](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-No cookiecutter, no Jinja2, no magic. Just a clean CLI that produces a fully working project — `uv sync`, `pytest`, ruff, pre-commit and CI all wired up from second one.
+---
+
+## Wissenschaftlicher Hintergrund
+
+**Implosive Genesis** (V_RIG) ist ein theoretisch-formales Framework, das die Entstehung von Raum,
+Zeit und Bewusstsein als rekursiven, selbstorganisierenden Prozess modelliert. Es verbindet
+Prinzipien der Informationstheorie, Quantenmechanik und Bewusstseinsforschung in einer kohärenten
+mathematischen Struktur.
+
+### Kernkonzepte
+
+| Kürzel | Konzept | Beschreibung |
+|--------|---------|--------------|
+| **V_RIG** | Rekursive Implosive Genesis | Zentrales Modell der selbstreferenziellen Entstehung |
+| **OIPK** | Ontologisches Implosives Prinzip der Kohärenz | Kohärenzbedingung für emergente Strukturen |
+| **Frameprinciple** | Rahmenprinzip | Formale Beschreibung von Beobachterrahmen und Übergängen |
+| **Type-6** | Bewusstseinsstufe 6 | Rekursive Selbstwahrnehmung als physikalischer Zustand |
+
+### Theoretische Basis
+
+Das Modell postuliert, dass Raum und Zeit keine fundamentalen Größen sind, sondern emergente
+Phänomene eines tieferliegenden rekursiven Informationsprozesses. Bewusstsein wird dabei nicht
+als Epiphänomen, sondern als strukturell notwendige Bedingung für stabile Selbstreferenz
+behandelt (Type-6-Zustand).
+
+Die Implosion als geometrisch-dynamisches Prinzip beschreibt den Übergang von disperser
+Informationsverteilung zu kohärenter, selbstorganisierter Struktur — analog zur Entstehung
+stabiler Materie aus Quantenfluktuationen.
 
 ---
 
-## Install
+## Installation
 
 ```bash
-pip install diamond-setup
-# or
-uv tool install diamond-setup
+pip install implosive-genesis
+# oder
+uv tool install implosive-genesis
 ```
 
-## Usage
+## Verwendung
 
 ```bash
-# New project with the minimal template (default)
-diamond scaffold my-lib
+# Neues Projekt mit dem minimalen Template (Standard)
+ig scaffold my-experiment
 
-# GenesisAeon preset (adds domains.yaml + entropy-table bridge)
-diamond scaffold my-physics-tool --template genesis --author "Ada Lovelace"
+# Genesis-Preset (fügt domains.yaml + Entropie-Tabellen-Bridge hinzu)
+ig scaffold my-physics-tool --template genesis --author "Ada Lovelace"
 
-# Preview what would be generated (no files written)
-diamond scaffold my-lib --dry-run
+# Vorschau ohne Dateien zu schreiben
+ig scaffold my-experiment --dry-run
 
-# See all templates
-diamond list-templates
+# Alle Templates anzeigen
+ig list-templates
 
-# Validate any project directory
-diamond validate path/to/my-project
-diamond validate          # validates the current directory
+# Projektverzeichnis validieren
+ig validate path/to/my-project
+ig validate          # validiert das aktuelle Verzeichnis
 ```
 
-## What you get
-
-Running `diamond scaffold my-lib` produces:
-
-```
-my-lib/
-├── src/
-│   └── my_lib/
-│       └── __init__.py       # __version__ = "0.1.0"
-├── tests/
-│   ├── __init__.py
-│   └── test_main.py
-├── .github/
-│   └── workflows/
-│       └── ci.yml            # matrix: 3.11 + 3.12
-├── pyproject.toml            # hatchling, ruff, pytest configured
-├── README.md
-├── .gitignore
-└── .pre-commit-config.yaml   # ruff + standard hooks
-```
-
-Then just:
+## Schnellstart (Entwicklung)
 
 ```bash
-cd my-lib
-uv sync --dev
-pre-commit install
+git clone https://github.com/GenesisAeon/implosive-genesis
+cd implosive-genesis
+uv sync --extra dev
 uv run pytest
+```
+
+## Projektstruktur
+
+```
+src/implosive_genesis/
+├── __init__.py          # Version und Metadaten
+├── cli.py               # Typer-CLI (ig-Befehl)
+├── preset.py            # Template-Engine
+├── validator.py         # Projektvalidierung
+└── templates/
+    ├── minimal.py       # Minimales Python-Paket-Template
+    └── genesis.py       # Erweitertes Template mit Domain-YAML
 ```
 
 ## Templates
 
-| Template | Description |
-|----------|-------------|
-| `minimal` | Clean Python package for everyone |
-| `genesis` | Adds `domains.yaml` + entropy-table bridge (GenesisAeon preset) |
-
-## Extending
-
-Adding a new template is one Python file. See [docs/templates.md](docs/templates.md).
+| Template | Beschreibung |
+|----------|--------------|
+| `minimal` | Sauberes Python-Paket für alle Anwendungsfälle |
+| `genesis` | Erweitert `minimal` um `domains.yaml` + Entropie-Tabellen-Bridge |
 
 ---
 
-Built with [uv](https://docs.astral.sh/uv/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)
+Entwickelt mit [uv](https://docs.astral.sh/uv/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)

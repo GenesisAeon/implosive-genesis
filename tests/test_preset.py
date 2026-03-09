@@ -2,8 +2,8 @@
 
 import pytest
 
-from diamond_setup.preset import _build_context, _to_snake, scaffold
-from diamond_setup.templates import REGISTRY
+from implosive_genesis.preset import _build_context, _to_snake, scaffold
+from implosive_genesis.templates import REGISTRY
 
 
 def test_to_snake_kebab():

@@ -59,7 +59,7 @@ def export_to_entropy_table(
         "relations": data.get("relations", []),
         "metadata": {
             **data.get("metadata", {}),
-            "generated_by": "${name} (diamond-setup v1.0.0)",
+            "generated_by": "${name} (implosive-genesis v0.1.0)",
         },
     }
 

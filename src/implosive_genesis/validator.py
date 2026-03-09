@@ -1,4 +1,4 @@
-"""Validator — checks whether a directory looks like a healthy diamond-setup project."""
+"""Validator — checks whether a directory looks like a healthy implosive-genesis project."""
 
 from __future__ import annotations
 
