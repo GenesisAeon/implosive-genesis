@@ -9,8 +9,8 @@ Rahmens bereit:
 """
 
 from implosive_genesis.theory.frameprinciple import (
-    HBAR,
     C_LIGHT,
+    HBAR,
     LAMBDA_OIPK_DEFAULT,
     THETA_ORTHOGONAL,
     FramePrinciple,

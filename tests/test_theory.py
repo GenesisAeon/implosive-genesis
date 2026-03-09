@@ -25,7 +25,6 @@ from implosive_genesis.theory.tesseract import (
     Tesseract,
 )
 
-
 # ===========================================================================
 # theory/__init__.py – re-export smoke test
 # ===========================================================================

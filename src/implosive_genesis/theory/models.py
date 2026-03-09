@@ -111,7 +111,8 @@ class FullSummary:
         return (
             f"FullSummary(n={self.n})\n"
             f"  β_n            = {self.beta_n:.6f}\n"
-            f"  V_RIG          = {self.v_rig_result.v_rig:.4f} ± {self.v_rig_result.std_dev:.4f} km/s\n"
+            f"  V_RIG          = {self.v_rig_result.v_rig:.4f}"
+            f" ± {self.v_rig_result.std_dev:.4f} km/s\n"
             f"  α_Φ            = {self.v_rig_result.alpha_phi:.8f}\n"
             f"  L_n            = {self.coherence_length_m:.6e} m\n"
             f"  I_n            = {self.impulse_energy_j:.6e} J\n"
