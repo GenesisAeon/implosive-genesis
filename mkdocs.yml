@@ -41,3 +41,7 @@ nav:
   - Home: index.md
   - CLI Reference: cli.md
   - Templates: templates.md
+  - Theorie:
+    - Frame-Prinzip: theory/frameprinciple.md
+    - OIPK: theory/oipk.md
+    - Tesseract & CREP: theory/tesseract.md
