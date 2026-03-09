@@ -69,3 +69,8 @@ addopts = "--cov=implosive_genesis --cov-report=term-missing -v"
 source = ["src"]
 omit = ["tests/*"]
 
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.0.0",
+]
+

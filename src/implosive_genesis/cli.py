@@ -15,7 +15,10 @@ from .core.physics import PHI
 from .core.type6 import Type6Implosive
 from .core.vrig import V_RIG_KMS, compute_vrig
 from .preset import scaffold as _scaffold
+from .simulation.cosmic_moments import CosmicMomentsSimulator
+from .simulation.entropy_governance import EntropyGovernance
 from .templates import REGISTRY
+from .theory.frameprinciple import FramePrinciple, OIPKernel
 from .validator import validate as _validate
 
 app = typer.Typer(
@@ -301,6 +304,216 @@ def type6_sim(
     console.print(
         f"\n[bold]Kritischer Punkt:[/bold] x = {model.critical_point():.4f}  "
         f"[dim](Φ-Steilheit = {steepness:.6f})[/dim]"
+    )
+
+
+# ---------------------------------------------------------------------------
+# simulate
+# ---------------------------------------------------------------------------
+
+
+@app.command()
+def simulate(
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe (inklusiv)")
+    ] = 7,
+    temperature: Annotated[
+        float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin (CMB = 2.725 K)")
+    ] = 2.725,
+    t_0: Annotated[float, typer.Option("--t0", help="Grundzeitscheibe t₀ (normiert)")] = 1.0,
+) -> None:
+    """[bold]Implosive Genesis Simulation[/bold] – Phi-skalierte Zeitevolution.
+
+    Berechnet kosmische Momente für n = 0, …, n_max mit Zeitscheiben,
+    Resonanzfrequenzen, entropischen Preisen und CREP-Beiträgen.
+
+    Examples:
+
+      ig simulate
+
+      ig simulate --n-max 10 --temperature 2.725
+
+      ig simulate --n-max 5 --t0 1e-15
+    """
+    sim = CosmicMomentsSimulator(n_max=n_max, temperature=temperature, t_0=t_0)
+    moments = sim.run()
+
+    console.print(
+        Panel(
+            f"[bold cyan]Implosive Genesis Simulation[/bold cyan]  "
+            f"(n_max={n_max}, T={temperature} K, t₀={t_0}, Φ={PHI:.6f})",
+            expand=False,
+        )
+    )
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("n", style="bold magenta", no_wrap=True)
+    table.add_column("T_n", style="cyan")
+    table.add_column("f_R [Hz]", style="yellow")
+    table.add_column("P_E [J]", style="blue")
+    table.add_column("I_n [J]", style="green")
+    table.add_column("Φ^n", style="dim")
+
+    for m in moments:
+        table.add_row(
+            str(m.n),
+            f"{m.time_slice:.4e}",
+            f"{m.resonance_freq:.4e}",
+            f"{m.entropy_price_j:.4e}",
+            f"{m.impulse_energy_j:.4e}",
+            f"{m.expansion_ratio:.6f}",
+        )
+
+    console.print(table)
+
+    peak = sim.peak_moment()
+    total_ep = sim.total_entropy_price()
+    console.print(
+        f"\n[bold]Peak-Resonanz:[/bold] n={peak.n}  "
+        f"f_R = [cyan]{peak.resonance_freq:.4e}[/cyan] Hz\n"
+        f"[bold]Gesamt P_E:[/bold]    [blue]{total_ep:.4e}[/blue] J"
+    )
+
+
+# ---------------------------------------------------------------------------
+# entropy-price
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="entropy-price")
+def entropy_price(
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe (inklusiv)")
+    ] = 7,
+    temperature: Annotated[
+        float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin")
+    ] = 2.725,
+    ceiling: Annotated[
+        float | None,
+        typer.Option("--ceiling", "-c", help="Optionale Entropiedecke in Joule"),
+    ] = None,
+) -> None:
+    """[bold]Entropischer Preis[/bold] – Governance-Bericht der Rekursionsstufen.
+
+    P_E(n, T) = n · k_B · T · ln(Φ)
+
+    Zeigt Budget-Anteile, CREP-Beiträge und optionale Überschreitungen
+    einer Entropiedecke (--ceiling).
+
+    Examples:
+
+      ig entropy-price
+
+      ig entropy-price --n-max 10 --temperature 2.725
+
+      ig entropy-price --ceiling 1e-23
+    """
+    gov = EntropyGovernance(n_max=n_max, temperature=temperature, ceiling_j=ceiling)
+    report = gov.governance_report()
+
+    ceiling_str = f"{ceiling:.3e} J" if ceiling is not None else "—"
+    console.print(
+        Panel(
+            f"[bold cyan]Entropy-Price Governance[/bold cyan]  "
+            f"(n_max={n_max}, T={temperature} K, ceiling={ceiling_str})",
+            expand=False,
+        )
+    )
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("n", style="bold magenta", no_wrap=True)
+    table.add_column("P_E [J]", style="blue")
+    table.add_column("Budget %", style="cyan")
+    table.add_column("CREP", style="yellow")
+    table.add_column("Overflow [J]", style="red")
+
+    for b in report.budgets:
+        overflow_str = f"{b.overflow_j:.3e}" if b.is_overflow else "[green]—[/green]"
+        table.add_row(
+            str(b.n),
+            f"{b.entropy_price_j:.4e}",
+            f"{b.budget_fraction * 100:.2f}%",
+            f"{b.crep_contribution:.4e}",
+            overflow_str,
+        )
+
+    console.print(table)
+    console.print(
+        f"\n[bold]Gesamt-Entropie:[/bold] [blue]{report.total_entropy_j:.4e}[/blue] J\n"
+        f"[bold]Gesamt-CREP:[/bold]    [yellow]{report.total_crep:.4e}[/yellow]\n"
+        f"[bold]Overflow-Stufen:[/bold] {report.n_overflow}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# frame-render
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="frame-render")
+def frame_render(
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe (inklusiv)")
+    ] = 7,
+    lambda_m: Annotated[
+        float | None,
+        typer.Option("--lambda", "-l", help="OIPK-Wellenlänge λ in Metern (Standard: c/V_RIG)"),
+    ] = None,
+) -> None:
+    """[bold]Frame-Render[/bold] – Kohärenzlängen und Stabilität des OIPK-Rahmens.
+
+    Rendert die Frame-Principle-Struktur für n = 0, …, n_max:
+    Kohärenzlänge L_n = λ_OIPK · Φ^{n/3}, Impulsenergie I_n und Stabilität S_F(n).
+
+    Examples:
+
+      ig frame-render
+
+      ig frame-render --n-max 10
+
+      ig frame-render --lambda 1e-3
+    """
+    from .theory.frameprinciple import LAMBDA_OIPK_DEFAULT
+
+    lam = lambda_m if lambda_m is not None else LAMBDA_OIPK_DEFAULT
+    from .core.vrig import cosmic_alpha_phi
+
+    kernel = OIPKernel(lambda_m=lam, alpha_phi=cosmic_alpha_phi())
+    frame = FramePrinciple(kernel=kernel)
+
+    console.print(
+        Panel(
+            f"[bold cyan]Frame-Render[/bold cyan]  "
+            f"(n_max={n_max}, λ_OIPK={lam:.4e} m, Φ={PHI:.6f})",
+            expand=False,
+        )
+    )
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("n", style="bold magenta", no_wrap=True)
+    table.add_column("L_n [m]", style="cyan")
+    table.add_column("I_n [J]", style="green")
+    table.add_column("S_F(n)", style="yellow")
+    table.add_column("Φ^{n/3}", style="dim")
+
+    for n in range(n_max + 1):
+        l_n = frame.coherence_length(n)
+        i_n = frame.impulse_energy(n)
+        s_n = frame.stability_at(n)
+        phi_n3 = PHI ** (n / 3)
+        table.add_row(
+            str(n),
+            f"{l_n:.4e}",
+            f"{i_n:.4e}",
+            f"{s_n:.4e}",
+            f"{phi_n3:.6f}",
+        )
+
+    console.print(table)
+    console.print(
+        f"\n[bold]OIPK Energie:[/bold]    [green]{kernel.energy():.4e}[/green] J\n"
+        f"[bold]Frame-Stabilität:[/bold] [yellow]{kernel.frame_stability():.4e}[/yellow]\n"
+        f"[bold]θ_⊥:[/bold]            {kernel.orthogonality_angle_deg():.4f}°"
     )
 
 
