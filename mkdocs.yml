@@ -54,6 +54,9 @@ nav:
     - Frame-Prinzip: theory/frameprinciple.md
     - OIPK: theory/oipk.md
     - Tesseract & CREP: theory/tesseract.md
+    - Entropischer Preis: theory/entropic_price.md
+  - Simulation:
+    - Tesseract-Visualisierung & CMB: simulation/tesseract.md
   - API-Referenz: api.md
   - Beispiele: examples.md
   - CLI Reference: cli.md

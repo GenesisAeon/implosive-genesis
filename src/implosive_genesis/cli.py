@@ -518,6 +518,330 @@ def frame_render(
 
 
 # ---------------------------------------------------------------------------
+# entropy-price (SymPy-erweitert, v0.2.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="entropy-price-sympy")
+def entropy_price_sympy(
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")
+    ] = 7,
+    temperature: Annotated[
+        float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin")
+    ] = 2.725,
+    steps: Annotated[
+        int, typer.Option("--steps", "-s", help="Riemann-Integrations-Schritte")
+    ] = 10_000,
+    bits: Annotated[
+        float, typer.Option("--bits", help="Informationsgehalt in Bits")
+    ] = 1.0,
+    show_proof: Annotated[
+        bool, typer.Option("--show-proof", help="Zeige SymPy-Beweise")
+    ] = False,
+) -> None:
+    """[bold]Entropischer Preis (SymPy)[/bold] – Numerische Integration + symbolischer Beweis.
+
+    E_price = ∫(S_V - S_A)dV + k_B · T · ln2 · bits
+
+    Verwendet SymPy für symbolische Ableitung und Riemann-Summe für numerische Integration.
+
+    Examples:
+
+      ig entropy-price-sympy
+
+      ig entropy-price-sympy --steps 10000 --n-max 10
+
+      ig entropy-price-sympy --show-proof --bits 8.0
+    """
+    from .formalization.entropic_price import EntropicPriceDerivation, integrate_entropic_price
+
+    result = integrate_entropic_price(n_max=n_max, temperature=temperature, bits=bits, steps=steps)
+    deriv = EntropicPriceDerivation(n_max_val=n_max, temperature=temperature, bits_val=bits)
+
+    console.print(
+        Panel(
+            f"[bold cyan]Entropischer Preis (SymPy + Numerisch)[/bold cyan]  "
+            f"(n_max={n_max}, T={temperature} K, steps={steps:,}, bits={bits})",
+            expand=False,
+        )
+    )
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("Komponente", style="bold magenta", no_wrap=True)
+    table.add_column("Wert [J]", style="cyan")
+    table.add_column("Anteil", style="dim")
+
+    total = result.e_price_j
+    frac_int = result.integral_part_j / total if total > 0 else 0.0
+    frac_info = result.info_part_j / total if total > 0 else 0.0
+
+    table.add_row("∫(S_V - S_A)dV", f"{result.integral_part_j:.6e}", f"{frac_int * 100:.2f}%")
+    table.add_row("k_B·T·ln2·bits", f"{result.info_part_j:.6e}", f"{frac_info * 100:.2f}%")
+    table.add_row("[bold]E_price (gesamt)[/bold]", f"[bold]{result.e_price_j:.6e}[/bold]", "100%")
+
+    console.print(table)
+    console.print(f"\n[bold]Riemann-Schritte:[/bold] {result.steps:,}")
+    console.print(f"[bold]Φ:[/bold] {result.phi:.10f}")
+
+    numerical = deriv.numerical_value()
+    console.print(
+        f"[bold]SymPy (geschlossene Form):[/bold] [green]{numerical:.6e}[/green] J"
+    )
+
+    if show_proof:
+        console.print("\n[bold yellow]SymPy-Beweis: E_price linear in T[/bold yellow]")
+        is_linear = deriv.prove_linearity_in_T()
+        status = "[green]✔ Bewiesen[/green]" if is_linear else "[red]✘ Fehlgeschlagen[/red]"
+        console.print(f"  dE/dT = E/T (linear in T): {status}")
+        latex = deriv.latex_expression()
+        console.print(f"\n[bold]LaTeX:[/bold] [dim]{latex}[/dim]")
+
+
+# ---------------------------------------------------------------------------
+# tesseract-render (v0.2.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="tesseract-render")
+def tesseract_render(
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")
+    ] = 7,
+    temperature: Annotated[
+        float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin")
+    ] = 2.725,
+    save: Annotated[
+        str | None,
+        typer.Option("--save", help="Speichere als Datei (z.B. 'png', 'pdf' oder Pfad)")
+    ] = None,
+    ascii_only: Annotated[
+        bool, typer.Option("--ascii", help="Nur ASCII-Vorschau, kein matplotlib")
+    ] = False,
+) -> None:
+    """[bold]Tesseract-Render[/bold] – Matplotlib-Visualisierung + CREP-Heatmap.
+
+    Visualisiert Zeitscheiben T_n = t_0 · Φ^n, CREP-Werte und Phi-Skalierung
+    als 3-Panel-Figure (CREP-Heatmap, Balken, Log-Phi-Skalierung).
+
+    Examples:
+
+      ig tesseract-render
+
+      ig tesseract-render --save png
+
+      ig tesseract-render --save tesseract_output.pdf --n-max 10
+
+      ig tesseract-render --ascii
+    """
+    from .simulation.tesseract_render import TesseractRenderer
+
+    renderer = TesseractRenderer(n_max=n_max, temperature=temperature)
+
+    console.print(
+        Panel(
+            f"[bold cyan]Tesseract-Visualisierung[/bold cyan]  "
+            f"(n_max={n_max}, T={temperature} K, Φ={PHI:.6f})",
+            expand=False,
+        )
+    )
+
+    # ASCII-Vorschau (immer)
+    console.print(renderer.ascii_preview())
+
+    if ascii_only:
+        return
+
+    # Datei speichern
+    if save is not None:
+        # Wenn save ein einfaches Format ist (z.B. "png"), Standardname verwenden
+        if save in {"png", "pdf", "svg", "jpg"}:
+            out_path = f"tesseract_n{n_max}.{save}"
+        else:
+            out_path = save
+
+        try:
+            saved = renderer.save(out_path)
+            console.print(
+                f"\n[bold green]Gespeichert:[/bold green] [cyan]{saved}[/cyan]"
+            )
+        except Exception as e:
+            err_console.print(f"[red]Fehler beim Speichern: {e}[/red]")
+            raise typer.Exit(code=1) from e
+    else:
+        # Nur render, nicht speichern
+        try:
+            import matplotlib.pyplot as plt
+
+            fig = renderer.render()
+            console.print(
+                "\n[dim]Tipp: Verwende [bold]--save png[/bold] um die Visualisierung zu speichern.[/dim]"
+            )
+            plt.close(fig)
+        except Exception as e:
+            err_console.print(f"[red]Render-Fehler: {e}[/red]")
+            raise typer.Exit(code=1) from e
+
+
+# ---------------------------------------------------------------------------
+# cmb-test (v0.2.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="cmb-test")
+def cmb_test(
+    n_sim: Annotated[
+        int, typer.Option("--n-sim", "-n", help="Anzahl Monte-Carlo-Simulationen")
+    ] = 5000,
+    v_rig: Annotated[
+        float, typer.Option("--v-rig", help="V_RIG in km/s (Standard: 1352.0)")
+    ] = V_RIG_KMS,
+    v_cmb: Annotated[
+        float, typer.Option("--v-cmb", help="CMB-Dipolwert in km/s (Planck 2018: 369.82)")
+    ] = 369.82,
+    alpha: Annotated[
+        float, typer.Option("--alpha", help="Signifikanzniveau (Standard: 0.05)")
+    ] = 0.05,
+    seed: Annotated[
+        int | None, typer.Option("--seed", help="Zufalls-Seed")
+    ] = None,
+) -> None:
+    """[bold]CMB-Falsifikationstest[/bold] – Monte-Carlo gegen realen CMB-Dipol.
+
+    Testet ob V_RIG = 1352 km/s mit dem CMB-Dipol v_CMB = 369.82 km/s
+    vereinbar ist. Unter der Modellhypothese v_obs = V_RIG · U(0,1) + N(0,σ²).
+
+    H₀: Modell ist mit CMB-Dipol konsistent
+    H₁: p < α → Modell falsifiziert
+
+    Examples:
+
+      ig cmb-test
+
+      ig cmb-test --n-sim 5000
+
+      ig cmb-test --n-sim 10000 --seed 42
+
+      ig cmb-test --v-rig 1352 --alpha 0.01
+    """
+    from .simulation.cmb_falsification import CMBFalsificationTest
+
+    test = CMBFalsificationTest(
+        n_sim=n_sim,
+        v_rig_kms=v_rig,
+        v_cmb_kms=v_cmb,
+        alpha=alpha,
+        seed=seed,
+    )
+    result = test.run()
+
+    verdict_color = "red" if result.is_falsified else "green"
+    console.print(
+        Panel(
+            f"[bold cyan]CMB-Falsifikationstest[/bold cyan]  "
+            f"(n_sim={n_sim:,}, V_RIG={v_rig:.1f} km/s, v_CMB={v_cmb:.2f} km/s)",
+            expand=False,
+        )
+    )
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("Parameter", style="bold magenta", no_wrap=True)
+    table.add_column("Wert", style="cyan")
+    table.add_column("Einheit / Info", style="dim")
+
+    table.add_row("V_RIG (Modell)", f"{result.v_rig_kms:.2f}", "km/s")
+    table.add_row("v_CMB (Planck 2018)", f"{result.v_cmb_kms:.2f}", "km/s")
+    table.add_row("E[v] unter Modell", f"{result.expected_v_kms:.2f}", "km/s (V_RIG/2)")
+    table.add_row("μ_MC (Mittelwert)", f"{result.mean_sim_kms:.2f}", "km/s")
+    table.add_row("σ_MC", f"{result.std_sim_kms:.2f}", "km/s")
+    table.add_row("|μ - v_CMB|", f"{result.deviation_kms:.2f}", f"km/s ({result.deviation_sigma:.2f}σ)")
+    table.add_row("n_konsistent", f"{result.n_consistent:,}", f"von {result.n_sim:,}")
+    table.add_row("Toleranz", f"{result.tolerance_kms:.2f}", "km/s (3σ + 1 km/s)")
+    table.add_row("[bold]p-Wert[/bold]", f"[bold]{result.p_value:.6f}[/bold]", f"α = {result.alpha}")
+
+    console.print(table)
+    console.print(
+        f"\n[bold {verdict_color}]Urteil: {result.verdict}[/bold {verdict_color}]"
+    )
+
+
+# ---------------------------------------------------------------------------
+# phi-proof (v0.2.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="phi-proof")
+def phi_proof(
+    beta_0: Annotated[
+        float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")
+    ] = 1.0,
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="β_n-Reihe bis n_max")
+    ] = 7,
+) -> None:
+    """[bold]Phi-Beweis[/bold] – SymPy-Formalisierung von β_n = β_0 · Φ^{n/3}.
+
+    Beweist symbolisch:
+      - β_{n+3} = Φ · β_n (Rekursionsrelation)
+      - β_{n+1}/β_n = Φ^{1/3} (konstantes Verhältnis)
+      - Φ² = Φ + 1 (Goldene-Schnitt-Identität)
+      - λ = ln(Φ)/3 (Lyapunov-Exponent)
+
+    Examples:
+
+      ig phi-proof
+
+      ig phi-proof --beta0 0.5 --n-max 10
+    """
+    from .formalization.phi_scaling import stability_analysis, PhiScalingProof
+
+    console.print(
+        Panel(
+            f"[bold cyan]Phi-Skalierungs-Beweis (SymPy)[/bold cyan]  "
+            f"(β₀={beta_0}, n_max={n_max}, Φ={PHI:.10f})",
+            expand=False,
+        )
+    )
+
+    sa = stability_analysis(beta_0=beta_0)
+    proof = PhiScalingProof(beta_0_val=beta_0)
+
+    # Beweise
+    proof_table = Table(title="SymPy-Beweise", show_header=True, box=None, padding=(0, 2))
+    proof_table.add_column("Theorem", style="bold magenta")
+    proof_table.add_column("Status", style="cyan")
+
+    proofs_map = {
+        "β_{n+3} = Φ · β_n": sa.recursion_proved,
+        "β_{n+1}/β_n = Φ^{1/3}": sa.ratio_proved,
+        "Φ² = Φ + 1 (Goldene-Schnitt-ID)": sa.golden_id_proved,
+    }
+    for theorem, ok in proofs_map.items():
+        icon = "[green]✔ Bewiesen[/green]" if ok else "[red]✘ Fehlgeschlagen[/red]"
+        proof_table.add_row(theorem, icon)
+
+    console.print(proof_table)
+
+    # β_n-Reihe
+    console.print("\n[bold]β_n-Reihe:[/bold]")
+    beta_table = Table(show_header=True, box=None, padding=(0, 2))
+    beta_table.add_column("n", style="bold magenta")
+    beta_table.add_column("β_n = β₀·Φ^{n/3}", style="cyan")
+    beta_table.add_column("Φ^{n/3}", style="dim")
+
+    for n, beta in proof.numerical_beta_series(n_max):
+        phi_n3 = PHI ** (n / 3.0)
+        beta_table.add_row(str(n), f"{beta:.8f}", f"{phi_n3:.8f}")
+
+    console.print(beta_table)
+    console.print(
+        f"\n[bold]Lyapunov-Exponent:[/bold] λ = [cyan]{sa.lyapunov_exponent:.10f}[/cyan]  "
+        f"({'exponentiell' if sa.is_exponential else 'stabil'})\n"
+        f"[bold]β_n (LaTeX):[/bold] [dim]{sa.beta_n_latex}[/dim]"
+    )
+
+
+# ---------------------------------------------------------------------------
 # entry point
 # ---------------------------------------------------------------------------
 
