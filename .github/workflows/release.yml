@@ -17,7 +17,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release v0.2.0
+        if: github.ref_name == 'v0.2.0'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v0.2.0 – Formalisierung & Falsifizierbarkeit"
+          body_path: RELEASE_NOTES_v0.2.0.md
+          draft: false
+          prerelease: false
+
+      - name: Create GitHub Release (generic)
+        if: github.ref_name != 'v0.2.0'
         uses: softprops/action-gh-release@v2
         with:
           name: "${{ github.ref_name }} – Implosive Genesis"
@@ -32,9 +42,6 @@ jobs:
             - **Tesseract** – Phi-skalierte Zeitscheiben T_n = t₀ · Φⁿ
             - **CREP** – Collapse-Resonance-Entropy-Price P_E = n · k_B · T · ln(Φ)
             - **Type-6** – Rekursive Selbstwahrnehmung als physikalischer Zustand
-            - **CLI** – `ig scaffold`, `ig validate`, `ig list-templates`, `ig version`
-            - **Templates** – `minimal` und `genesis`
-            - **Simulation** – Entropiesteuerung und kosmische Momente
 
             ### Installation
 
@@ -43,12 +50,6 @@ jobs:
             # oder
             uv tool install implosive-genesis==${{ github.ref_name }}
             ```
-
-            ### Zenodo DOI
-
-            [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
-
-            *DOI wird nach Zenodo-Upload final gesetzt.*
 
             ### Dokumentation
 
