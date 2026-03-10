@@ -105,9 +105,7 @@ def test_integrate_result_type():
 
 def test_integrate_e_price_equals_sum_of_parts():
     result = integrate_entropic_price(n_max=5, steps=5000)
-    assert result.e_price_j == pytest.approx(
-        result.integral_part_j + result.info_part_j, rel=1e-9
-    )
+    assert result.e_price_j == pytest.approx(result.integral_part_j + result.info_part_j, rel=1e-9)
 
 
 def test_integrate_info_part_correct():

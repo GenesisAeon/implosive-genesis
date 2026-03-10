@@ -139,9 +139,7 @@ class PhiScalingProof:
         Returns:
             Liste von (n, β_n)-Tupeln.
         """
-        return [
-            (n, self.beta_0_val * PHI_VAL ** (n / 3.0)) for n in range(n_max + 1)
-        ]
+        return [(n, self.beta_0_val * PHI_VAL ** (n / 3.0)) for n in range(n_max + 1)]
 
     def run_all_proofs(self) -> dict[str, bool]:
         """Führt alle symbolischen Beweise durch.

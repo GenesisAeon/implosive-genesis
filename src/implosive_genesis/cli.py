@@ -524,21 +524,15 @@ def frame_render(
 
 @app.command(name="entropy-price-sympy")
 def entropy_price_sympy(
-    n_max: Annotated[
-        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")
-    ] = 7,
+    n_max: Annotated[int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")] = 7,
     temperature: Annotated[
         float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin")
     ] = 2.725,
     steps: Annotated[
         int, typer.Option("--steps", "-s", help="Riemann-Integrations-Schritte")
     ] = 10_000,
-    bits: Annotated[
-        float, typer.Option("--bits", help="Informationsgehalt in Bits")
-    ] = 1.0,
-    show_proof: Annotated[
-        bool, typer.Option("--show-proof", help="Zeige SymPy-Beweise")
-    ] = False,
+    bits: Annotated[float, typer.Option("--bits", help="Informationsgehalt in Bits")] = 1.0,
+    show_proof: Annotated[bool, typer.Option("--show-proof", help="Zeige SymPy-Beweise")] = False,
 ) -> None:
     """[bold]Entropischer Preis (SymPy)[/bold] – Numerische Integration + symbolischer Beweis.
 
@@ -585,9 +579,7 @@ def entropy_price_sympy(
     console.print(f"[bold]Φ:[/bold] {result.phi:.10f}")
 
     numerical = deriv.numerical_value()
-    console.print(
-        f"[bold]SymPy (geschlossene Form):[/bold] [green]{numerical:.6e}[/green] J"
-    )
+    console.print(f"[bold]SymPy (geschlossene Form):[/bold] [green]{numerical:.6e}[/green] J")
 
     if show_proof:
         console.print("\n[bold yellow]SymPy-Beweis: E_price linear in T[/bold yellow]")
@@ -605,15 +597,12 @@ def entropy_price_sympy(
 
 @app.command(name="tesseract-render")
 def tesseract_render(
-    n_max: Annotated[
-        int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")
-    ] = 7,
+    n_max: Annotated[int, typer.Option("--n-max", "-n", help="Maximale Rekursionsstufe")] = 7,
     temperature: Annotated[
         float, typer.Option("--temperature", "-T", help="Temperatur in Kelvin")
     ] = 2.725,
     save: Annotated[
-        str | None,
-        typer.Option("--save", help="Speichere als Datei (z.B. 'png', 'pdf' oder Pfad)")
+        str | None, typer.Option("--save", help="Speichere als Datei (z.B. 'png', 'pdf' oder Pfad)")
     ] = None,
     ascii_only: Annotated[
         bool, typer.Option("--ascii", help="Nur ASCII-Vorschau, kein matplotlib")
@@ -659,9 +648,7 @@ def tesseract_render(
 
         try:
             saved = renderer.save(out_path)
-            console.print(
-                f"\n[bold green]Gespeichert:[/bold green] [cyan]{saved}[/cyan]"
-            )
+            console.print(f"\n[bold green]Gespeichert:[/bold green] [cyan]{saved}[/cyan]")
         except Exception as e:
             err_console.print(f"[red]Fehler beim Speichern: {e}[/red]")
             raise typer.Exit(code=1) from e
@@ -700,9 +687,7 @@ def cmb_test(
     alpha: Annotated[
         float, typer.Option("--alpha", help="Signifikanzniveau (Standard: 0.05)")
     ] = 0.05,
-    seed: Annotated[
-        int | None, typer.Option("--seed", help="Zufalls-Seed")
-    ] = None,
+    seed: Annotated[int | None, typer.Option("--seed", help="Zufalls-Seed")] = None,
 ) -> None:
     """[bold]CMB-Falsifikationstest[/bold] – Monte-Carlo gegen realen CMB-Dipol.
 
@@ -766,9 +751,7 @@ def cmb_test(
     )
 
     console.print(table)
-    console.print(
-        f"\n[bold {verdict_color}]Urteil: {result.verdict}[/bold {verdict_color}]"
-    )
+    console.print(f"\n[bold {verdict_color}]Urteil: {result.verdict}[/bold {verdict_color}]")
 
 
 # ---------------------------------------------------------------------------
@@ -778,12 +761,8 @@ def cmb_test(
 
 @app.command(name="phi-proof")
 def phi_proof(
-    beta_0: Annotated[
-        float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")
-    ] = 1.0,
-    n_max: Annotated[
-        int, typer.Option("--n-max", "-n", help="β_n-Reihe bis n_max")
-    ] = 7,
+    beta_0: Annotated[float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")] = 1.0,
+    n_max: Annotated[int, typer.Option("--n-max", "-n", help="β_n-Reihe bis n_max")] = 7,
 ) -> None:
     """[bold]Phi-Beweis[/bold] – SymPy-Formalisierung von β_n = β_0 · Φ^{n/3}.
 

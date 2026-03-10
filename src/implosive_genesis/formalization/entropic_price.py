@@ -134,11 +134,7 @@ class EntropicPriceDerivation:
             Vereinfachter SymPy-Ausdruck.
         """
         n_max_sym = sp.Symbol("n_max", positive=True)
-        return (
-            self._k_b
-            * self._T
-            * (sp.log(self._phi) * n_max_sym / 2 + sp.log(2) * self._bits)
-        )
+        return self._k_b * self._T * (sp.log(self._phi) * n_max_sym / 2 + sp.log(2) * self._bits)
 
     def numerical_value(self) -> float:
         """Numerisch ausgewerteter entropischer Preis E_price.
