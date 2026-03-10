@@ -3,18 +3,18 @@
 from __future__ import annotations
 
 import math
+
 import pytest
 
 from implosive_genesis.chronology.integration import (
-    CHRONOLOGY_PARTS,
-    ChronologyPart,
-    ChronologyResult,
-    ChronologyValidator,
-    PHI,
-    V_RIG_KMS,
     C_LIGHT,
+    CHRONOLOGY_PARTS,
     COSMIC_ALPHA,
     HBAR,
+    PHI,
+    V_RIG_KMS,
+    ChronologyResult,
+    ChronologyValidator,
 )
 
 # ---------------------------------------------------------------------------
@@ -96,7 +96,7 @@ def test_chronology_part_2_vrig():
 def test_chronology_part_frozen():
     """ChronologyPart ist ein frozen dataclass."""
     part = CHRONOLOGY_PARTS[0]
-    with pytest.raises(Exception):
+    with pytest.raises((AttributeError, TypeError)):
         part.number = 99  # type: ignore[misc]
 
 

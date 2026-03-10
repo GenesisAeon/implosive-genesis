@@ -144,7 +144,7 @@ class FractalTesseract:
         if depth < 0:
             raise ValueError(f"depth muss ≥ 0 sein, ist aber {depth}")
         if depth > 16:
-            raise ValueError(f"depth > 16 nicht empfohlen (exponentielles Wachstum)")
+            raise ValueError("depth > 16 nicht empfohlen (exponentielles Wachstum)")
 
         root = self._build_frame(0, depth)
         n_frames = self._count_frames(root)

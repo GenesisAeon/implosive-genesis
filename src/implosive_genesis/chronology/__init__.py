@@ -6,10 +6,10 @@ und mit den Implementierungsmodulen verknüpft.
 """
 
 from .integration import (
+    CHRONOLOGY_PARTS,
     ChronologyPart,
     ChronologyResult,
     ChronologyValidator,
-    CHRONOLOGY_PARTS,
 )
 
 __all__ = [

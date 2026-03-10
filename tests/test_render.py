@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 import math
+
 import pytest
 
 from implosive_genesis.render.fractal_tesseract import (
+    _ASCII_CHARS,
+    PHI,
     FractalFrame,
     FractalTesseract,
     RenderResult,
-    PHI,
-    _ASCII_CHARS,
 )
 
 # ---------------------------------------------------------------------------
@@ -381,9 +382,9 @@ def test_render_result_root_grandchildren():
 def test_beta_series_consistent():
     ft = FractalTesseract(beta_0=2.0, l0=50.0)
     result = ft.render(depth=5)
-    for n, l in enumerate(result.coherence_lengths):
+    for n, length in enumerate(result.coherence_lengths):
         expected = 50.0 * PHI ** (n / 3.0)
-        assert abs(l - expected) < 1e-8
+        assert abs(length - expected) < 1e-8
 
 
 def test_render_root_scale_1():

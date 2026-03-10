@@ -1218,7 +1218,7 @@ def chronology_validate(
 
       ig chronology-validate --verbose --tolerance 1e-8
     """
-    from .chronology.integration import CHRONOLOGY_PARTS, ChronologyValidator
+    from .chronology.integration import ChronologyValidator
 
     validator = ChronologyValidator(tolerance=tolerance)
 
@@ -1265,7 +1265,11 @@ def chronology_validate(
             _print_part_result(pr, verbose=True)
 
     console.print("")
-    status_str = "[bold green]✓ ALLE 10 TEILE BESTANDEN[/bold green]" if result.passed else "[bold red]✗ FEHLER IN CHRONOLOGIE[/bold red]"
+    status_str = (
+        "[bold green]✓ ALLE 10 TEILE BESTANDEN[/bold green]"
+        if result.passed
+        else "[bold red]✗ FEHLER IN CHRONOLOGIE[/bold red]"
+    )
     console.print(
         f"  {status_str}  "
         f"([cyan]{result.n_passed}/{result.n_total}[/cyan], "
@@ -1283,7 +1287,8 @@ def _print_part_result(result, verbose: bool = False) -> None:
         f"\n  {status} [bold]Teil {result.part.number}[/bold]: {result.part.title}"
     )
     console.print(f"     Formel: [cyan]{result.part.key_formula}[/cyan]")
-    console.print(f"     Konstante: [yellow]{result.part.key_constant[0]}[/yellow] = {result.part.key_constant[1]:.6g}")
+    name, val = result.part.key_constant
+    console.print(f"     Konstante: [yellow]{name}[/yellow] = {val:.6g}")
     if verbose:
         for check_name, ok in result.checks.items():
             mark = "  [green]✓[/green]" if ok else "  [red]✗[/red]"
