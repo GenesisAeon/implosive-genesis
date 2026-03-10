@@ -5,10 +5,12 @@
 [![CI](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/implosive-genesis/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
+[![DOI v0.1.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
+[![DOI v0.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
 [![PyPI](https://img.shields.io/pypi/v/implosive-genesis)](https://pypi.org/project/implosive-genesis/)
 
-**DOI**: [10.5281/zenodo.18930089](https://doi.org/10.5281/zenodo.18930089)
+**DOI (v0.1.0)**: [10.5281/zenodo.18930089](https://doi.org/10.5281/zenodo.18930089)
+**DOI (v0.2.0)**: [10.5281/zenodo.18940541](https://doi.org/10.5281/zenodo.18940541)
 **Dokumentation**: [genesisaeon.github.io/implosive-genesis](https://genesisaeon.github.io/implosive-genesis/)
 
 ---
@@ -213,8 +215,17 @@ Wenn Sie Implosive Genesis in einer wissenschaftlichen Arbeit verwenden:
   title   = {Implosive Genesis: Rekursive Entstehung von Raum, Zeit und Bewusstsein},
   year    = {2025},
   version = {0.1.0},
-  doi     = {10.5281/zenodo.XXXXXXX},
+  doi     = {10.5281/zenodo.18930089},
   url     = {https://github.com/GenesisAeon/implosive-genesis}
+}
+
+@software{implosive_genesis_2026,
+  author  = {GenesisAeon},
+  title   = {Implosive Genesis – Formalisierung \& Falsifizierbarkeit},
+  year    = {2026},
+  version = {0.2.0},
+  doi     = {10.5281/zenodo.18940541},
+  url     = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.2.0}
 }
 ```
 

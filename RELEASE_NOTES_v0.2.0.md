@@ -64,7 +64,7 @@ uv run ig tesseract-render --ascii
   title     = {Implosive Genesis – Formalisierung & Falsifizierbarkeit},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.[DEIN-NEUER-DOI-HIER]},
+  doi       = {10.5281/zenodo.18940541},
   url       = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.2.0}
 }
 ```
@@ -78,7 +78,6 @@ uv run ig tesseract-render --ascii
 
 ---
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
-*DOI wird nach Zenodo-Upload final gesetzt.*
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
 
 [Dokumentation](https://genesisaeon.github.io/implosive-genesis/) · [Issues](https://github.com/GenesisAeon/implosive-genesis/issues) · [v0.1.0](https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.1.0)
