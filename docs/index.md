@@ -7,8 +7,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/GenesisAeon/implosive-genesis/blob/main/LICENSE)
 [![DOI v0.1.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
 [![DOI v0.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
+[![DOI v0.3.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18942660.svg)](https://doi.org/10.5281/zenodo.18942660)
 
-**Zenodo DOI**: https://doi.org/10.5281/zenodo.18940541
+**Zenodo DOI**: https://doi.org/10.5281/zenodo.18942660
 **Live Docs**: https://genesisaeon.github.io/implosive-genesis/
 
 ---
