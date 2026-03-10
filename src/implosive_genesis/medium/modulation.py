@@ -237,7 +237,7 @@ class AnesthesiaTestResult:
             f"  τ_M            : {self.tau_m:.1f} s",
             f"  Ereignisse     : {self.n_events()}",
             f"  Anesthesia-Zeit: {self.total_anesthesia_time():.1f} s "
-            f"({100*(1-self.consciousness_fraction()):.1f}%)",
+            f"({100 * (1 - self.consciousness_fraction()):.1f}%)",
             f"  Bewusst-Anteil : {self.consciousness_fraction():.4f}",
             f"  R_loss         : {self.loss_rate:.4f}",
             f"  R_rec          : {self.recovery_rate:.4f}",

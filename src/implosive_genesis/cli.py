@@ -840,9 +840,7 @@ def oipk_calc(
     n_max: Annotated[
         int, typer.Option("--n-max", "-n", help="Dimension-Reihe bis Stufe n_max")
     ] = 7,
-    show_tau: Annotated[
-        bool, typer.Option("--tau", help="τ ⊥ t Prozesszeiten anzeigen")
-    ] = False,
+    show_tau: Annotated[bool, typer.Option("--tau", help="τ ⊥ t Prozesszeiten anzeigen")] = False,
 ) -> None:
     """[bold]OIPK-Kalkulator[/bold] – Orthogonal Impulse Photon Kernel.
 
@@ -876,8 +874,7 @@ def oipk_calc(
     axiom = "A dimension emerges when information would otherwise collapse."
     doc0 = OIPKKernel.__doc__.splitlines()[0] if OIPKKernel.__doc__ else ""
     console.print(
-        f"\n[dim italic]{doc0}[/dim italic]\n"
-        f"[bold]Leitprinzip:[/bold] [italic]{axiom}[/italic]\n"
+        f"\n[dim italic]{doc0}[/dim italic]\n[bold]Leitprinzip:[/bold] [italic]{axiom}[/italic]\n"
     )
 
     # Kerngrößen-Tabelle
@@ -926,12 +923,8 @@ def anesthesia_test(
     duration: Annotated[
         float, typer.Option("--duration", "-d", help="Testdauer in Sekunden")
     ] = 300.0,
-    tau_m: Annotated[
-        float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")
-    ] = 120.0,
-    dt: Annotated[
-        float, typer.Option("--dt", help="Zeitschritt [s]")
-    ] = 1.0,
+    tau_m: Annotated[float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")] = 120.0,
+    dt: Annotated[float, typer.Option("--dt", help="Zeitschritt [s]")] = 1.0,
     show_timeline: Annotated[
         bool, typer.Option("--timeline", help="Zeitreihe des Frame-Buffers ausgeben")
     ] = False,
@@ -975,7 +968,7 @@ def anesthesia_test(
     summary_table.add_row("Anesthesia-Zeit", f"{result.total_anesthesia_time():.1f} s")
     summary_table.add_row(
         "Bewusst-Anteil",
-        f"{result.consciousness_fraction():.4f}  ({100*result.consciousness_fraction():.1f}%)",
+        f"{result.consciousness_fraction():.4f}  ({100 * result.consciousness_fraction():.1f}%)",
     )
     summary_table.add_row("R_loss (Kohärenzverlust)", f"{result.loss_rate:.4f}")
     summary_table.add_row("R_rec (Wiederherstellung)", f"{result.recovery_rate:.4f}")
@@ -994,8 +987,12 @@ def anesthesia_test(
             t_end_str = f"{ev.t_end:.1f}" if ev.t_end is not None else "–"
             dur_str = f"{ev.duration:.1f}" if ev.duration is not None else "–"
             ev_table.add_row(
-                str(i), f"{ev.t_start:.1f}", t_end_str, dur_str,
-                f"{ev.depth:.4f}", f"{ev.recovery:.4f}",
+                str(i),
+                f"{ev.t_start:.1f}",
+                t_end_str,
+                dur_str,
+                f"{ev.depth:.4f}",
+                f"{ev.recovery:.4f}",
             )
         console.print(ev_table)
     else:
@@ -1026,18 +1023,10 @@ def anesthesia_test(
 
 @app.command(name="medium-modulate")
 def medium_modulate(
-    t_max: Annotated[
-        float, typer.Option("--t-max", "-t", help="Endzeit [s]")
-    ] = 240.0,
-    tau_m: Annotated[
-        float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")
-    ] = 120.0,
-    m0: Annotated[
-        float, typer.Option("--m0", help="Initial-Amplitude M_0 (normiert)")
-    ] = 1.0,
-    n_steps: Annotated[
-        int, typer.Option("--steps", "-n", help="Anzahl Zeitschritte")
-    ] = 12,
+    t_max: Annotated[float, typer.Option("--t-max", "-t", help="Endzeit [s]")] = 240.0,
+    tau_m: Annotated[float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")] = 120.0,
+    m0: Annotated[float, typer.Option("--m0", help="Initial-Amplitude M_0 (normiert)")] = 1.0,
+    n_steps: Annotated[int, typer.Option("--steps", "-n", help="Anzahl Zeitschritte")] = 12,
 ) -> None:
     """[bold]Medium-Modulation[/bold] – Feld-Medium-Wechselwirkung.
 

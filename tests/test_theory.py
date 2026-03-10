@@ -606,6 +606,7 @@ class TestFrameprincipleV030:
 
     def test_dimension_axiom_constant(self) -> None:
         from implosive_genesis.theory.frameprinciple import DIMENSION_AXIOM
+
         assert "dimension" in DIMENSION_AXIOM.lower()
         assert "collapse" in DIMENSION_AXIOM.lower()
 
@@ -617,6 +618,7 @@ class TestFrameprincipleV030:
 
     def test_emergent_dimension_entry_type(self) -> None:
         from implosive_genesis.theory.frameprinciple import EmergentDimensionEntry
+
         fp = FramePrinciple()
         d = fp.emergent_dimension(5)
         assert isinstance(d, EmergentDimensionEntry)
@@ -654,13 +656,16 @@ class TestFrameprincipleV030:
     def test_oipk_kernel_tau_perp_ratio(self) -> None:
         kernel = OIPKernel()
         from implosive_genesis.core.physics import PHI as _PHI
+
         ratio = kernel.tau_perp() / kernel.tau_oipk()
         assert abs(ratio - 1.0 / _PHI) < 1e-12
 
     def test_theory_init_exports_dimension_axiom(self) -> None:
         from implosive_genesis import theory
+
         assert hasattr(theory, "DIMENSION_AXIOM")
 
     def test_theory_init_exports_emergent_dimension_entry(self) -> None:
         from implosive_genesis import theory
+
         assert hasattr(theory, "EmergentDimensionEntry")
