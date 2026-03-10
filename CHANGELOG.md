@@ -5,6 +5,37 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), version
 
 ---
 
+## [0.3.0] – 2026-03-10
+
+**OIPK, Medium-Modulation & Anesthesia-Tests** – Frameprinciple vollständig implementiert, OIPK als geschlossene Gleichung, Medium-Modulation und Anesthesia-Frame-Buffer-Simulationen.
+
+### Added
+- **Orthogonal Impulse Photon Kernel (OIPK)** (`oipk/kernel.py`)
+  - Geschlossene Gleichung: `CREP = w_buffer / (w_buffer + P_info)`, `τ ⊥ t`
+  - Berechnung von `λ_OIPK`, `ω`, `E_OIPK`, `S_F` + emergente Dimensionen `D_n`
+  - Neue CLI: `ig oipk-calc [--lambda 500 --tau]`
+- **Frameprinciple vollendet** (`theory/frameprinciple.py`)
+  - `DIMENSION_AXIOM = "A dimension emerges when information would otherwise collapse."`
+  - `emergent_dimension()`, `dimension_series()` und exakte OIPK-Integration
+- **Medium-Modulation** (`medium/modulation.py`)
+  - Frame-Buffer-Simulation mit Bewusstseinsverlust-Modellierung
+  - Neue CLI: `ig medium-modulate --t-max 240`
+- **Anesthesia-Tests** (`medium/modulation.py`)
+  - Bewusst-Anteil, R_loss, R_rec, Anesthesia-Ereignisse
+  - Neue CLI: `ig anesthesia-test --duration 300 [--timeline]`
+- **Tests**: 449 Tests (+126 neu), Coverage ≥ 92 %, ruff + pre-commit 100 % clean
+
+### Changed
+- `pyproject.toml`: Version auf `0.3.0` angehoben
+- `theory/frameprinciple.py`: DIMENSION_AXIOM + emergente Dimensionen integriert
+- `cli.py`: 3 neue Befehle registriert (`oipk-calc`, `anesthesia-test`, `medium-modulate`)
+
+### Fixed
+- ruff-Lint: F401 (unused import in `test_oipk.py`) behoben
+- Formatierung: `cli.py`, `modulation.py`, `test_theory.py` per `ruff format` bereinigt
+
+---
+
 ## [0.2.0] – 2026-03-10
 
 **Formalisierung & Falsifizierbarkeit** – exakte mathematische Ableitungen, visuelles Tesseract-Rendering und erste empirische CMB-Falsifizierung.
@@ -53,5 +84,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), version
 
 ---
 
+[0.3.0]: https://github.com/GenesisAeon/implosive-genesis/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/GenesisAeon/implosive-genesis/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.1.0

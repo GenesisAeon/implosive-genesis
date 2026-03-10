@@ -7,10 +7,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DOI v0.1.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
 [![DOI v0.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
+[![DOI v0.3.0](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.%5BDOI--PENDING%5D-blue)](https://doi.org/10.5281/zenodo.[DOI-PENDING])
 [![PyPI](https://img.shields.io/pypi/v/implosive-genesis)](https://pypi.org/project/implosive-genesis/)
 
 **DOI (v0.1.0)**: [10.5281/zenodo.18930089](https://doi.org/10.5281/zenodo.18930089)
 **DOI (v0.2.0)**: [10.5281/zenodo.18940541](https://doi.org/10.5281/zenodo.18940541)
+**DOI (v0.3.0)**: *pending – wird nach Zenodo-Publish aktualisiert*
 **Dokumentation**: [genesisaeon.github.io/implosive-genesis](https://genesisaeon.github.io/implosive-genesis/)
 
 ---
@@ -150,9 +152,13 @@ src/implosive_genesis/
 │   ├── vrig.py              # V_RIG-Berechnung + Monte-Carlo
 │   └── type6.py             # Type-6-Bewusstseinszustand
 ├── theory/
-│   ├── frameprinciple.py    # OIPKernel + FramePrinciple
+│   ├── frameprinciple.py    # OIPKernel + FramePrinciple (DIMENSION_AXIOM)
 │   ├── tesseract.py         # Tesseract-Zeitscheiben + CREP
 │   └── models.py            # ImplosiveGenesisModel
+├── oipk/
+│   └── kernel.py            # OIPK-Kernel (λ, ω, E, CREP, emergente Dimensionen)
+├── medium/
+│   └── modulation.py        # Medium-Modulation + Anesthesia-Simulation
 ├── simulation/
 │   ├── entropy_governance.py
 │   └── cosmic_moments.py
@@ -172,7 +178,7 @@ src/implosive_genesis/
 
 ## Roadmap
 
-### v0.1.0 (aktuell)
+### v0.1.0
 - [x] Phi-Skalierung (`PhiScaling`, `PHI`)
 - [x] V_RIG mit Monte-Carlo-Unsicherheit
 - [x] OIPK-Kernel und Frame-Prinzip
@@ -185,18 +191,24 @@ src/implosive_genesis/
 - [x] Vollständige Dokumentation (MkDocs)
 - [x] Zenodo-DOI
 
-### v0.2.0 (geplant)
-- [ ] Numerische ODE-Integration für dynamische Feldentwicklung
-- [ ] Export-Format: HDF5/NetCDF für Simulationsdaten
-- [ ] Interaktive Jupyter-Widgets (ipywidgets)
-- [ ] Erweiterte Monte-Carlo-Analyse (numpy/scipy)
-- [ ] REST-API für Remote-Simulationen
+### v0.2.0
+- [x] SymPy-Formalisierung (entropischer Preis, Phi-Skalierung)
+- [x] Tesseract-Visualisierung (3-Panel-Rendering, PNG/PDF-Export)
+- [x] CMB-Falsifizierung (Monte-Carlo vs. realer CMB-Dipol)
+- [x] CLI: `ig entropy-price-sympy`, `ig tesseract-render`, `ig cmb-test`, `ig phi-proof`
+- [x] 323 Tests, Coverage ≥ 99 %
 
-### v0.3.0 (geplant)
-- [ ] 3D-Visualisierung der Phi-Gitter (matplotlib 3D / plotly)
-- [ ] Plugin-System für externe Theoriemodule
-- [ ] Benchmark-Suite für Rekursionsperformance
-- [ ] Publikationsready-Figures-Generator
+### v0.3.0 (aktuell)
+- [x] OIPK-Kernel als geschlossene Gleichung (`oipk/kernel.py`)
+- [x] Frameprinciple vollendet (`DIMENSION_AXIOM`, `emergent_dimension()`)
+- [x] Medium-Modulation + Anesthesia-Simulation (`medium/modulation.py`)
+- [x] CLI: `ig oipk-calc`, `ig anesthesia-test`, `ig medium-modulate`
+- [x] 449 Tests (+126 neu), Coverage ≥ 92 %
+
+### v0.4.0 (geplant)
+- [ ] Fraktale Frame-Rendering-Engine + volle Tesseract-Integration
+- [ ] Empirische Anesthesia-Daten-Validierung
+- [ ] Finale Konsistenz-Checks mit Chronologie 1–10
 
 ### Langfristig
 - [ ] Integration mit bestehenden Quantenmechanik-Bibliotheken (QuTiP, Qiskit)
@@ -219,13 +231,23 @@ Wenn Sie Implosive Genesis in einer wissenschaftlichen Arbeit verwenden:
   url     = {https://github.com/GenesisAeon/implosive-genesis}
 }
 
-@software{implosive_genesis_2026,
+@software{implosive_genesis_2026_v02,
   author  = {GenesisAeon},
   title   = {Implosive Genesis – Formalisierung \& Falsifizierbarkeit},
   year    = {2026},
   version = {0.2.0},
   doi     = {10.5281/zenodo.18940541},
   url     = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.2.0}
+}
+
+@software{implosive_genesis_2026_v03,
+  author    = {GenesisAeon},
+  title     = {Implosive Genesis – OIPK, Medium-Modulation \& Anesthesia-Tests},
+  year      = {2026},
+  version   = {0.3.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.[DOI-PENDING]},
+  url       = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.3.0}
 }
 ```
 
