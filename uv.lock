@@ -449,7 +449,7 @@ wheels = [
 
 [[package]]
 name = "implosive-genesis"
-version = "0.3.0"
+version = "0.4.0.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "matplotlib" },
@@ -480,7 +480,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "matplotlib", specifier = ">=3.8.0" },
+    { name = "matplotlib", extras = ["animation"], specifier = ">=3.8.0" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.6.0" },
     { name = "mkdocs-material", marker = "extra == 'docs'", specifier = ">=9.5.0" },
     { name = "numpy", specifier = ">=1.26.0" },
