@@ -11,11 +11,11 @@ from typer.testing import CliRunner
 from implosive_genesis.cli import app
 from implosive_genesis.core.physics import PHI
 from implosive_genesis.simulation.cmb_falsification import (
+    V_CMB_KMS,
+    V_RIG_KMS,
     CMBFalsificationTest,
     CMBTestResult,
     run_cmb_test,
-    V_CMB_KMS,
-    V_RIG_KMS,
 )
 from implosive_genesis.simulation.tesseract_render import (
     TesseractFrameData,

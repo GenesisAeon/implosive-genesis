@@ -655,10 +655,7 @@ def tesseract_render(
     # Datei speichern
     if save is not None:
         # Wenn save ein einfaches Format ist (z.B. "png"), Standardname verwenden
-        if save in {"png", "pdf", "svg", "jpg"}:
-            out_path = f"tesseract_n{n_max}.{save}"
-        else:
-            out_path = save
+        out_path = f"tesseract_n{n_max}.{save}" if save in {"png", "pdf", "svg", "jpg"} else save
 
         try:
             saved = renderer.save(out_path)
@@ -675,7 +672,8 @@ def tesseract_render(
 
             fig = renderer.render()
             console.print(
-                "\n[dim]Tipp: Verwende [bold]--save png[/bold] um die Visualisierung zu speichern.[/dim]"
+                "\n[dim]Tipp: Verwende [bold]--save png[/bold] "
+                "um die Visualisierung zu speichern.[/dim]"
             )
             plt.close(fig)
         except Exception as e:
@@ -754,10 +752,18 @@ def cmb_test(
     table.add_row("E[v] unter Modell", f"{result.expected_v_kms:.2f}", "km/s (V_RIG/2)")
     table.add_row("μ_MC (Mittelwert)", f"{result.mean_sim_kms:.2f}", "km/s")
     table.add_row("σ_MC", f"{result.std_sim_kms:.2f}", "km/s")
-    table.add_row("|μ - v_CMB|", f"{result.deviation_kms:.2f}", f"km/s ({result.deviation_sigma:.2f}σ)")
+    table.add_row(
+        "|μ - v_CMB|",
+        f"{result.deviation_kms:.2f}",
+        f"km/s ({result.deviation_sigma:.2f}σ)",
+    )
     table.add_row("n_konsistent", f"{result.n_consistent:,}", f"von {result.n_sim:,}")
     table.add_row("Toleranz", f"{result.tolerance_kms:.2f}", "km/s (3σ + 1 km/s)")
-    table.add_row("[bold]p-Wert[/bold]", f"[bold]{result.p_value:.6f}[/bold]", f"α = {result.alpha}")
+    table.add_row(
+        "[bold]p-Wert[/bold]",
+        f"[bold]{result.p_value:.6f}[/bold]",
+        f"α = {result.alpha}",
+    )
 
     console.print(table)
     console.print(
@@ -793,7 +799,7 @@ def phi_proof(
 
       ig phi-proof --beta0 0.5 --n-max 10
     """
-    from .formalization.phi_scaling import stability_analysis, PhiScalingProof
+    from .formalization.phi_scaling import PhiScalingProof, stability_analysis
 
     console.print(
         Panel(

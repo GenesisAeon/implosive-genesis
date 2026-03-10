@@ -176,7 +176,7 @@ class EntropicPriceDerivation:
         Returns:
             True wenn E_price linear in T ist.
         """
-        n_max_sym = sp.Symbol("n_max", positive=True)
+        sp.Symbol("n_max", positive=True)
         expr = self.symbolic_closed_form()
         deriv = sp.diff(expr, self._T)
         # E_price linear in T ↔ deriv = expr/T

@@ -63,7 +63,6 @@ def test_derivation_latex_expression_not_empty():
 
 
 def test_derivation_symbolic_expression_has_T():
-    import sympy as sp
 
     d = EntropicPriceDerivation()
     expr = d.symbolic_expression()
@@ -80,7 +79,7 @@ def test_derivation_symbolic_closed_form_not_zero():
 
 
 def test_derivation_information_term_positive():
-    d = EntropicPriceDerivation(temperature=2.725, bits_val=1.0)
+    EntropicPriceDerivation(temperature=2.725, bits_val=1.0)
     # k_B * T * ln(2) * 1.0 > 0
     assert K_B * 2.725 * math.log(2) > 0
 
@@ -305,8 +304,8 @@ def test_stability_custom_beta0():
 def test_formalization_package_exports():
     from implosive_genesis.formalization import (
         EntropicPriceDerivation,
-        integrate_entropic_price,
         PhiScalingProof,
+        integrate_entropic_price,
         stability_analysis,
     )
 

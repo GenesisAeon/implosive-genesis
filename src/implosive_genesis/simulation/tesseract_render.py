@@ -170,7 +170,7 @@ class TesseractRenderer:
         ax2.set_title("CREP-Werte pro Stufe", color=ax_colors["text"], fontsize=10)
         ax2.set_yscale("symlog", linthresh=1e-50)
 
-        for bar, val in zip(bars, data.crep_values):
+        for bar, val in zip(bars, data.crep_values, strict=False):
             if val > 0:
                 ax2.text(
                     bar.get_x() + bar.get_width() / 2,
@@ -205,8 +205,12 @@ class TesseractRenderer:
         )
         ax3.set_xlabel("Rekursionsstufe n", color=ax_colors["text"])
         ax3.set_ylabel("ln(·)", color=ax_colors["text"])
-        ax3.set_title(r"Log-$\Phi$-Skalierung $T_n$ vs. $\Phi^{n/3}$", color=ax_colors["text"], fontsize=10)
-        legend = ax3.legend(facecolor="#161b22", edgecolor="#30363d", labelcolor=ax_colors["text"])
+        ax3.set_title(
+            r"Log-$\Phi$-Skalierung $T_n$ vs. $\Phi^{n/3}$",
+            color=ax_colors["text"],
+            fontsize=10,
+        )
+        ax3.legend(facecolor="#161b22", edgecolor="#30363d", labelcolor=ax_colors["text"])
 
         fig.suptitle(
             f"Implosive Genesis – Tesseract-Visualisierung  "
