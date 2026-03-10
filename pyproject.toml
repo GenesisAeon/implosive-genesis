@@ -1,7 +1,7 @@
 [project]
 name = "implosive-genesis"
-version = "0.3.0"
-description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6)"
+version = "0.4.0-dev"
+description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6, Fraktale Rendering-Engine)"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "GenesisAeon" }]
@@ -23,7 +23,7 @@ dependencies = [
     "pyyaml>=6.0",
     "pydantic>=2.7",
     "sympy>=1.12",
-    "matplotlib>=3.8.0",
+    "matplotlib[animation]>=3.8.0",
     "numpy>=1.26.0",
 ]
 
@@ -46,7 +46,7 @@ ig = "implosive_genesis.cli:app"
 Repository = "https://github.com/GenesisAeon/implosive-genesis"
 Issues = "https://github.com/GenesisAeon/implosive-genesis/issues"
 Documentation = "https://genesisaeon.github.io/implosive-genesis/"
-Zenodo = "https://doi.org/10.5281/zenodo.18940541"
+Zenodo = "https://doi.org/10.5281/zenodo.18942660"
 
 [build-system]
 requires = ["hatchling"]

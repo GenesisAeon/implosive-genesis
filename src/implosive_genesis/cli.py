@@ -1082,6 +1082,217 @@ def medium_modulate(
 
 
 # ---------------------------------------------------------------------------
+# fractal-render (v0.4.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="fractal-render")
+def fractal_render(
+    depth: Annotated[
+        int, typer.Option("--depth", "-d", help="Maximale Rekursionstiefe (Standard: 5)")
+    ] = 5,
+    animate: Annotated[
+        bool, typer.Option("--animate", help="ASCII-Animations-Frames einschließen")
+    ] = False,
+    ascii_only: Annotated[
+        bool, typer.Option("--ascii", help="Nur ASCII-Darstellung ausgeben")
+    ] = False,
+    beta0: Annotated[
+        float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")
+    ] = 1.0,
+) -> None:
+    """[bold]Fraktale Rendering-Engine[/bold] – Phi-skalierter Tesseract-Fraktal.
+
+    Rendert den rekursiven Phi-skalierten Fraktalbaum als ASCII-Visualisierung.
+    Jede Tiefenebene skaliert geometrisch mit Φ = 1.618…
+
+    Formeln:
+
+      β_n = β₀ · Φ^{n/3}   (Kopplungsparameter)
+      L_n = λ_OIPK · Φ^{n/3}   (Kohärenzlänge)
+      T_n = t₀ · Φ^n   (Tesseract-Zeitscheibe)
+      I_n = 1/Φ^n   (Intensität, nimmt mit der Tiefe ab)
+
+    Examples:
+
+      ig fractal-render
+
+      ig fractal-render --depth 8 --animate
+
+      ig fractal-render --depth 6 --ascii --beta0 2.0
+    """
+    from .render.fractal_tesseract import FractalTesseract
+
+    ft = FractalTesseract(beta_0=beta0)
+
+    console.print(
+        Panel(
+            f"[bold cyan]Fraktale Rendering-Engine[/bold cyan]  "
+            f"depth=[yellow]{depth}[/yellow]  "
+            f"β₀=[yellow]{beta0}[/yellow]  "
+            f"Φ=[yellow]{PHI:.4f}[/yellow]",
+            expand=False,
+        )
+    )
+
+    result = ft.render(depth=depth, animate=animate)
+
+    if ascii_only:
+        console.print(result.ascii_art)
+        return
+
+    console.print(result.ascii_art)
+    console.print("")
+
+    table = Table(
+        title="Phi-Skalierungs-Serie", show_header=True, box=None, padding=(0, 2)
+    )
+    table.add_column("Tiefe n", style="bold magenta")
+    table.add_column("Φ^{n/3}", style="cyan")
+    table.add_column("β_n", style="yellow")
+    table.add_column("L_n [m]", style="green")
+    table.add_column("T_n [s]", style="dim")
+    table.add_column("I_n", style="blue")
+
+    for n in range(depth + 1):
+        phi_scale = result.phi_scaling_series[n]
+        table.add_row(
+            str(n),
+            f"{phi_scale:.4f}",
+            f"{beta0 * phi_scale:.4f}",
+            f"{result.coherence_lengths[n]:.2f}",
+            f"{result.time_slices[n]:.2e}",
+            f"{1.0 / PHI**n:.4f}" if n > 0 else "1.0000",
+        )
+
+    console.print(table)
+    console.print(
+        f"\n[dim]Frames gesamt: [cyan]{result.n_frames}[/cyan]  "
+        f"Zweige/Frame: [cyan]2[/cyan]  "
+        f"λ_OIPK: [cyan]{ft._LAMBDA_OIPK:.2f} m[/cyan][/dim]"
+    )
+
+
+# ---------------------------------------------------------------------------
+# chronology-validate (v0.4.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="chronology-validate")
+def chronology_validate(
+    part: Annotated[
+        int | None,
+        typer.Option("--part", "-p", help="Nur diesen Teil validieren (1–10). Standard: alle"),
+    ] = None,
+    tolerance: Annotated[
+        float,
+        typer.Option("--tolerance", help="Relative Fehlertoleranz (Standard: 1e-6)"),
+    ] = 1e-6,
+    verbose: Annotated[
+        bool, typer.Option("--verbose", "-v", help="Detaillierte Check-Ausgabe")
+    ] = False,
+) -> None:
+    """[bold]Chronologie-Validierung[/bold] – 10-Teile-Konsistenzprüfung.
+
+    Validiert alle 10 Teile der Implosive-Genesis-Chronologie auf
+    numerische Konsistenz. Jeder Teil ist einem oder mehreren
+    Implementierungsmodulen zugeordnet.
+
+    Teile:
+      1  Phi-Skalierung & geometrischer Verschnitt
+      2  V_RIG Urimpuls & kosmischer Alpha
+      3  Type-6 Bewusstseinsstufe & UTAC
+      4  OIPK Kern & τ ⊥ t Orthogonalität
+      5  Frameprinciple & Dimensionsaxiom
+      6  Tesseract-Zeitstruktur & CREP
+      7  Entropischer Preis & SymPy-Formalisierung
+      8  Medium-Modulation & Anästhesie-Tests
+      9  Fraktale Rendering-Engine
+     10  Zentrale Integration & Gesamtkonsistenz
+
+    Examples:
+
+      ig chronology-validate
+
+      ig chronology-validate --part 4
+
+      ig chronology-validate --verbose --tolerance 1e-8
+    """
+    from .chronology.integration import CHRONOLOGY_PARTS, ChronologyValidator
+
+    validator = ChronologyValidator(tolerance=tolerance)
+
+    console.print(
+        Panel(
+            "[bold cyan]Implosive Genesis – Chronologie-Validierung[/bold cyan]  "
+            f"v0.4.0  tol=[yellow]{tolerance:.0e}[/yellow]",
+            expand=False,
+        )
+    )
+
+    if part is not None:
+        if not 1 <= part <= 10:
+            err_console.print(f"[red]Teilnummer muss 1–10 sein, ist aber {part}[/red]")
+            raise typer.Exit(code=1)
+        result_single = validator.validate_part(part)
+        _print_part_result(result_single, verbose=True)
+        if not result_single.passed:
+            raise typer.Exit(code=1)
+        return
+
+    result = validator.validate()
+
+    table = Table(
+        title="Chronologie-Übersicht (10 Teile)", show_header=True, box=None, padding=(0, 2)
+    )
+    table.add_column("Teil", style="bold magenta")
+    table.add_column("Titel", style="cyan")
+    table.add_column("Module", style="dim")
+    table.add_column("Status", style="bold")
+
+    for pr in result.part_results:
+        status = "[green]✓ OK[/green]" if pr.passed else "[red]✗ FEHLER[/red]"
+        modules_str = ", ".join(pr.part.modules[:2])
+        if len(pr.part.modules) > 2:
+            modules_str += "…"
+        table.add_row(str(pr.part.number), pr.part.title, modules_str, status)
+
+    console.print(table)
+
+    if verbose:
+        console.print("")
+        for pr in result.part_results:
+            _print_part_result(pr, verbose=True)
+
+    console.print("")
+    status_str = "[bold green]✓ ALLE 10 TEILE BESTANDEN[/bold green]" if result.passed else "[bold red]✗ FEHLER IN CHRONOLOGIE[/bold red]"
+    console.print(
+        f"  {status_str}  "
+        f"([cyan]{result.n_passed}/{result.n_total}[/cyan], "
+        f"Bestehensquote: [yellow]{result.pass_rate:.0f}%[/yellow])"
+    )
+
+    if not result.passed:
+        raise typer.Exit(code=1)
+
+
+def _print_part_result(result, verbose: bool = False) -> None:
+    """Hilfsfunktion: Gib ein PartValidationResult aus."""
+    status = "[green]✓[/green]" if result.passed else "[red]✗[/red]"
+    console.print(
+        f"\n  {status} [bold]Teil {result.part.number}[/bold]: {result.part.title}"
+    )
+    console.print(f"     Formel: [cyan]{result.part.key_formula}[/cyan]")
+    console.print(f"     Konstante: [yellow]{result.part.key_constant[0]}[/yellow] = {result.part.key_constant[1]:.6g}")
+    if verbose:
+        for check_name, ok in result.checks.items():
+            mark = "  [green]✓[/green]" if ok else "  [red]✗[/red]"
+            console.print(f"   {mark} {check_name}")
+    if result.notes:
+        console.print(f"     [dim]{result.notes}[/dim]")
+
+
+# ---------------------------------------------------------------------------
 # entry point
 # ---------------------------------------------------------------------------
 
