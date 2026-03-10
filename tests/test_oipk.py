@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import math
 
-import pytest
-
 from implosive_genesis.oipk.kernel import (
     ALPHA_EM,
     C_LIGHT,
