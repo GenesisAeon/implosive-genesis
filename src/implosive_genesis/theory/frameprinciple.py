@@ -1,9 +1,12 @@
-"""Frameprinciple – OIPK (Orthogonal Impulse Photon Kernel) Definition.
+"""Frameprinciple – vollständige OIPK-Integration und Dimension-Emergenz.
 
 Das Frame-Prinzip beschreibt, wie Bezugsrahmen (Frames) aus orthogonalen
 Impuls-Photonen-Kernen (OIPK) emergieren. Jeder stabile Frame besitzt eine
 charakteristische OIPK-Wellenlänge, aus der Frequenz, Energie und
 Stabilitätskriterium abgeleitet werden.
+
+Leitprinzip:
+    „A dimension emerges when information would otherwise collapse."
 
 Kern-Formeln:
 
@@ -17,18 +20,25 @@ Kern-Formeln:
 
     L_n = λ_OIPK · Φ^{n/3}   (Kohärenzlänge auf Rekursionsstufe n)
 
+    D_n = ⌈log_Φ(I_n / E_0)⌉  (Emergente Dimension – verhindert Info-Kollaps)
+
+    τ ⊥ t  (OIPK-Prozesszeit orthogonal zur Raumzeit-Zeit)
+
 Verwendung::
 
     from implosive_genesis.theory.frameprinciple import OIPKernel, FramePrinciple
     kernel = OIPKernel(lambda_m=1e-9)
     fp = FramePrinciple(kernel=kernel)
     print(fp.coherence_length(3))
+    print(fp.emergent_dimension(5))
+    print(fp.dimension_axiom())
 """
 
 from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
+from typing import NamedTuple
 
 from implosive_genesis.core.physics import PHI
 from implosive_genesis.core.vrig import cosmic_alpha_phi
@@ -38,9 +48,14 @@ __all__ = [
     "C_LIGHT",
     "LAMBDA_OIPK_DEFAULT",
     "THETA_ORTHOGONAL",
+    "DIMENSION_AXIOM",
     "OIPKernel",
     "FramePrinciple",
+    "EmergentDimensionEntry",
 ]
+
+DIMENSION_AXIOM: str = "A dimension emerges when information would otherwise collapse."
+"""Leitprinzip des Frameprinciple: Dimensionen als informationserhaltende Strukturen."""
 
 HBAR: float = 1.054571817e-34
 """Reduziertes Plancksches Wirkungsquantum ℏ in J·s."""
@@ -118,6 +133,44 @@ class OIPKernel:
             θ_⊥ in Grad.
         """
         return math.degrees(THETA_ORTHOGONAL)
+
+    def tau_oipk(self) -> float:
+        """OIPK-Prozesszeit τ = λ_OIPK / c [s].
+
+        τ ⊥ t: Die Prozesszeit ist orthogonal zur Raumzeit-Zeit.
+
+        Returns:
+            Prozesszeit τ_OIPK in Sekunden.
+        """
+        return self.lambda_m / C_LIGHT
+
+    def tau_perp(self) -> float:
+        """Orthogonale Prozesszeit τ_⊥ = τ_OIPK / Φ [s].
+
+        Geometrische Orthogonalitätsbedingung im Phi-Gitter: ⟨τ_⊥, t⟩ ≡ 0.
+
+        Returns:
+            τ_⊥ in Sekunden.
+        """
+        return self.tau_oipk() / PHI
+
+
+class EmergentDimensionEntry(NamedTuple):
+    """Eintrag für eine emergente Dimension auf Rekursionsstufe n.
+
+    „A dimension emerges when information would otherwise collapse."
+
+    Attributes:
+        n:         Rekursionsstufe.
+        impulse_j: Impulsenergie I_n [J].
+        dimension: Emergente Dimension D_n = ⌈log_Φ(I_n/E_0)⌉.
+        collapsed: True wenn I_n < E_0 (Kollaps-Regime).
+    """
+
+    n: int
+    impulse_j: float
+    dimension: int
+    collapsed: bool
 
 
 @dataclass
@@ -201,3 +254,46 @@ class FramePrinciple:
             Effektive Stabilitätskennzahl auf Stufe n.
         """
         return self.kernel.frame_stability() * PHI ** (n / 3.0)
+
+    def emergent_dimension(self, n: int) -> EmergentDimensionEntry:
+        """Bestimmt die emergente Dimension auf Rekursionsstufe n.
+
+        „A dimension emerges when information would otherwise collapse."
+        Wenn I_n ≥ E_0, ergibt sich D_n = ⌈log_Φ(I_n/E_0)⌉ ≥ 0.
+        Wenn I_n < E_0, ist D_n = 0 (Kollaps-Regime).
+
+        Args:
+            n: Rekursionsstufe (≥ 0).
+
+        Returns:
+            EmergentDimensionEntry.
+        """
+        i_n = self.impulse_energy(n)
+        e0 = self.kernel.energy()
+        collapsed = i_n < e0
+        if collapsed or e0 == 0.0:
+            dim = 0
+        else:
+            ratio = i_n / e0
+            dim = math.ceil(math.log(ratio) / math.log(PHI)) if ratio > 1.0 else 0
+        return EmergentDimensionEntry(n=n, impulse_j=i_n, dimension=dim, collapsed=collapsed)
+
+    def dimension_series(self, n_max: int) -> list[EmergentDimensionEntry]:
+        """Emergente Dimensionen für n = 0, …, n_max.
+
+        Args:
+            n_max: Maximale Rekursionsstufe (inklusiv).
+
+        Returns:
+            Liste von EmergentDimensionEntry-Objekten.
+        """
+        return [self.emergent_dimension(n) for n in range(n_max + 1)]
+
+    @staticmethod
+    def dimension_axiom() -> str:
+        """Gibt das Leitprinzip des Frameprinciple zurück.
+
+        Returns:
+            DIMENSION_AXIOM-String.
+        """
+        return DIMENSION_AXIOM

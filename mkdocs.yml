@@ -53,6 +53,7 @@ nav:
   - Theorie:
     - Frame-Prinzip: theory/frameprinciple.md
     - OIPK: theory/oipk.md
+    - Anesthesia-Tests: theory/anesthesia.md
     - Tesseract & CREP: theory/tesseract.md
     - Entropischer Preis: theory/entropic_price.md
   - Simulation:

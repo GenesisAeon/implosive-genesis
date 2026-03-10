@@ -1,6 +1,6 @@
 [project]
 name = "implosive-genesis"
-version = "0.2.0"
+version = "0.3.0-dev"
 description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6)"
 readme = "README.md"
 license = { text = "MIT" }
