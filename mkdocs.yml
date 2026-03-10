@@ -58,6 +58,10 @@ nav:
     - Entropischer Preis: theory/entropic_price.md
   - Simulation:
     - Tesseract-Visualisierung & CMB: simulation/tesseract.md
+  - Rendering (v0.4.0):
+    - Fraktale Engine: render/fractal.md
+  - Chronologie (v0.4.0):
+    - Vollständige 10-Teile-Chronologie: chronology/full.md
   - API-Referenz: api.md
   - Beispiele: examples.md
   - CLI Reference: cli.md
