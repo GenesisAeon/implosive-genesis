@@ -46,7 +46,7 @@ ig = "implosive_genesis.cli:app"
 Repository = "https://github.com/GenesisAeon/implosive-genesis"
 Issues = "https://github.com/GenesisAeon/implosive-genesis/issues"
 Documentation = "https://genesisaeon.github.io/implosive-genesis/"
-Zenodo = "https://doi.org/10.5281/zenodo.XXXXXXX"
+Zenodo = "https://doi.org/10.5281/zenodo.18940541"
 
 [build-system]
 requires = ["hatchling"]
