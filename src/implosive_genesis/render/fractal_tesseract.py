@@ -281,8 +281,7 @@ class FractalTesseract:
         """
         lines: list[str] = []
         header = (
-            f"FractalTesseract  depth={max_depth}  Φ≈{PHI:.4f}  "
-            f"β₀={self.beta_0}  L₀={self.l0:.1f}m"
+            f"FractalTesseract  depth={max_depth}  Φ≈{PHI:.4f}  β₀={self.beta_0}  L₀={self.l0:.1f}m"
         )
         lines.append(header)
         lines.append("─" * len(header))

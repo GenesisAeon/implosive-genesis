@@ -146,9 +146,7 @@ def test_validate_part_invalid_number_11():
 def test_validate_part_n_passes(n: int):
     v = ChronologyValidator()
     result = v.validate_part(n)
-    assert result.passed, (
-        f"Teil {n} ({CHRONOLOGY_PARTS[n-1].title}) failed: {result.checks}"
-    )
+    assert result.passed, f"Teil {n} ({CHRONOLOGY_PARTS[n - 1].title}) failed: {result.checks}"
 
 
 @pytest.mark.parametrize("n", range(1, 11))

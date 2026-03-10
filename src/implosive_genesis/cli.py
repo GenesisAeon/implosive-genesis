@@ -1097,9 +1097,7 @@ def fractal_render(
     ascii_only: Annotated[
         bool, typer.Option("--ascii", help="Nur ASCII-Darstellung ausgeben")
     ] = False,
-    beta0: Annotated[
-        float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")
-    ] = 1.0,
+    beta0: Annotated[float, typer.Option("--beta0", help="Basis-Kopplungskonstante β₀")] = 1.0,
 ) -> None:
     """[bold]Fraktale Rendering-Engine[/bold] – Phi-skalierter Tesseract-Fraktal.
 
@@ -1144,9 +1142,7 @@ def fractal_render(
     console.print(result.ascii_art)
     console.print("")
 
-    table = Table(
-        title="Phi-Skalierungs-Serie", show_header=True, box=None, padding=(0, 2)
-    )
+    table = Table(title="Phi-Skalierungs-Serie", show_header=True, box=None, padding=(0, 2))
     table.add_column("Tiefe n", style="bold magenta")
     table.add_column("Φ^{n/3}", style="cyan")
     table.add_column("β_n", style="yellow")
@@ -1283,9 +1279,7 @@ def chronology_validate(
 def _print_part_result(result, verbose: bool = False) -> None:
     """Hilfsfunktion: Gib ein PartValidationResult aus."""
     status = "[green]✓[/green]" if result.passed else "[red]✗[/red]"
-    console.print(
-        f"\n  {status} [bold]Teil {result.part.number}[/bold]: {result.part.title}"
-    )
+    console.print(f"\n  {status} [bold]Teil {result.part.number}[/bold]: {result.part.title}")
     console.print(f"     Formel: [cyan]{result.part.key_formula}[/cyan]")
     name, val = result.part.key_constant
     console.print(f"     Konstante: [yellow]{name}[/yellow] = {val:.6g}")

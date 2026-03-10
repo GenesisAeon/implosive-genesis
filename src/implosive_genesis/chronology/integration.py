@@ -399,6 +399,7 @@ class ChronologyValidator:
 
     def _validate_part_3(self, part: ChronologyPart) -> PartValidationResult:
         """Teil 3: Type-6 Sigmoid."""
+
         # inverted_sigmoid(0) = 0.5
         def inv_sigmoid(x: float, k: float = 1.0) -> float:
             return 1.0 / (1.0 + math.exp(k * x))
@@ -623,9 +624,7 @@ class ChronologyValidator:
             notes="Φ² = Φ + 1 (goldene Identität bestätigt)",
         )
 
-    def _build_summary(
-        self, results: list[PartValidationResult], n_passed: int
-    ) -> str:
+    def _build_summary(self, results: list[PartValidationResult], n_passed: int) -> str:
         """Erzeuge Zusammenfassung der Validierungsergebnisse."""
         lines = [
             "=" * 60,
@@ -637,9 +636,7 @@ class ChronologyValidator:
         ]
         for r in results:
             status = "✓" if r.passed else "✗"
-            lines.append(
-                f"  {status} Teil {r.part.number:2d}: {r.part.title}"
-            )
+            lines.append(f"  {status} Teil {r.part.number:2d}: {r.part.title}")
             for check_name, ok in r.checks.items():
                 mark = "    ✓" if ok else "    ✗"
                 lines.append(f"{mark} {check_name}")
