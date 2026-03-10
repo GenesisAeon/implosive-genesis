@@ -10,9 +10,11 @@ Rahmens bereit:
 
 from implosive_genesis.theory.frameprinciple import (
     C_LIGHT,
+    DIMENSION_AXIOM,
     HBAR,
     LAMBDA_OIPK_DEFAULT,
     THETA_ORTHOGONAL,
+    EmergentDimensionEntry,
     FramePrinciple,
     OIPKernel,
 )
@@ -31,8 +33,10 @@ __all__ = [
     "C_LIGHT",
     "LAMBDA_OIPK_DEFAULT",
     "THETA_ORTHOGONAL",
+    "DIMENSION_AXIOM",
     "OIPKernel",
     "FramePrinciple",
+    "EmergentDimensionEntry",
     # tesseract
     "K_BOLTZMANN",
     "C_LIGHT_MS",

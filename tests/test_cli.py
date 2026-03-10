@@ -13,7 +13,7 @@ runner = CliRunner()
 def test_version():
     result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
-    assert "0.2.0-dev" in result.output
+    assert "0.3.0-dev" in result.output
 
 
 def test_list_templates():

@@ -827,6 +827,261 @@ def phi_proof(
 
 
 # ---------------------------------------------------------------------------
+# oipk-calc (v0.3.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="oipk-calc")
+def oipk_calc(
+    lambda_nm: Annotated[
+        float | None,
+        typer.Option("--lambda", "-l", help="OIPK-Wellenlänge λ in Nanometern (Standard: c/V_RIG)"),
+    ] = None,
+    n_max: Annotated[
+        int, typer.Option("--n-max", "-n", help="Dimension-Reihe bis Stufe n_max")
+    ] = 7,
+    show_tau: Annotated[bool, typer.Option("--tau", help="τ ⊥ t Prozesszeiten anzeigen")] = False,
+) -> None:
+    """[bold]OIPK-Kalkulator[/bold] – Orthogonal Impulse Photon Kernel.
+
+    Berechnet alle Kerngrößen des OIPK: τ ⊥ t, ω, E_OIPK, S_F, CREP
+    sowie die emergenten Dimensionen D_n für n = 0..n_max.
+
+    Leitprinzip: [italic]„A dimension emerges when information would otherwise collapse."[/italic]
+
+    Examples:
+
+      ig oipk-calc
+
+      ig oipk-calc --lambda 500 --n-max 10
+
+      ig oipk-calc --tau
+    """
+    from .oipk.kernel import OIPKKernel, compute_crep_oipk
+
+    kernel = OIPKKernel(lambda_m=lambda_nm * 1e-9) if lambda_nm is not None else OIPKKernel()
+
+    result = kernel.compute()
+
+    console.print(
+        Panel(
+            f"[bold cyan]OIPK-Kalkulator[/bold cyan]  "
+            f"λ = [yellow]{result.lambda_m:.4e}[/yellow] m  |  "
+            f"α_Φ = [yellow]{result.alpha_phi:.6f}[/yellow]",
+            expand=False,
+        )
+    )
+    axiom = "A dimension emerges when information would otherwise collapse."
+    doc0 = OIPKKernel.__doc__.splitlines()[0] if OIPKKernel.__doc__ else ""
+    console.print(
+        f"\n[dim italic]{doc0}[/dim italic]\n[bold]Leitprinzip:[/bold] [italic]{axiom}[/italic]\n"
+    )
+
+    # Kerngrößen-Tabelle
+    core_table = Table(title="Kerngrößen", show_header=True, box=None, padding=(0, 2))
+    core_table.add_column("Größe", style="bold magenta")
+    core_table.add_column("Wert", style="cyan")
+    core_table.add_column("Einheit", style="dim")
+
+    core_table.add_row("λ_OIPK", f"{result.lambda_m:.6e}", "m")
+    if show_tau:
+        core_table.add_row("τ_OIPK", f"{result.tau_oipk:.6e}", "s")
+        core_table.add_row("τ_⊥ (τ ⊥ t)", f"{result.tau_perp:.6e}", "s")
+    core_table.add_row("ω", f"{result.omega:.6e}", "rad/s")
+    core_table.add_row("E_OIPK", f"{result.energy_j:.6e}", "J")
+    core_table.add_row("S_F", f"{result.frame_stability:.4f}", "–")
+    crep_val = compute_crep_oipk(kernel)
+    core_table.add_row("CREP", f"{crep_val:.6e}", "kg·m/s")
+    core_table.add_row("τ ⊥ t", str(result.is_orthogonal), "–")
+
+    console.print(core_table)
+
+    # Dimension-Reihe
+    dims = kernel.dimension_series(n_max)
+    dim_table = Table(
+        title=f"Emergente Dimensionen (n = 0..{n_max})", show_header=True, box=None, padding=(0, 2)
+    )
+    dim_table.add_column("n", style="bold magenta")
+    dim_table.add_column("I_n [J]", style="cyan")
+    dim_table.add_column("D_n", style="yellow")
+    dim_table.add_column("Status", style="dim")
+
+    for d in dims:
+        status = "[red]KOLLAPS[/red]" if d.collapsed else "[green]emergent[/green]"
+        dim_table.add_row(str(d.n), f"{d.impulse_j:.4e}", str(d.dimension), status)
+
+    console.print(dim_table)
+
+
+# ---------------------------------------------------------------------------
+# anesthesia-test (v0.3.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="anesthesia-test")
+def anesthesia_test(
+    duration: Annotated[
+        float, typer.Option("--duration", "-d", help="Testdauer in Sekunden")
+    ] = 300.0,
+    tau_m: Annotated[float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")] = 120.0,
+    dt: Annotated[float, typer.Option("--dt", help="Zeitschritt [s]")] = 1.0,
+    show_timeline: Annotated[
+        bool, typer.Option("--timeline", help="Zeitreihe des Frame-Buffers ausgeben")
+    ] = False,
+) -> None:
+    """[bold]Anesthesia-Test[/bold] – Frame-Buffer-Simulation bei Bewusstseinsverlust.
+
+    Simuliert den schrittweisen Kollaps des Frame-Buffers während eines
+    Anesthesia-Ereignisses. Zeigt Kohärenzverlust, Wiederherstellungsrate
+    und erkannte Anesthesia-Phasen.
+
+    Examples:
+
+      ig anesthesia-test
+
+      ig anesthesia-test --duration 600 --tau-m 90
+
+      ig anesthesia-test --duration 300 --timeline
+    """
+    from .medium.modulation import run_anesthesia_test
+
+    console.print(
+        Panel(
+            f"[bold cyan]Anesthesia-Test[/bold cyan]  "
+            f"Dauer=[yellow]{duration:.0f}s[/yellow]  "
+            f"τ_M=[yellow]{tau_m:.0f}s[/yellow]  "
+            f"dt=[yellow]{dt:.1f}s[/yellow]",
+            expand=False,
+        )
+    )
+
+    result = run_anesthesia_test(duration=duration, tau_m=tau_m, dt=dt)
+
+    # Zusammenfassung
+    summary_table = Table(title="Testergebnis", show_header=False, box=None, padding=(0, 2))
+    summary_table.add_column("Feld", style="bold magenta")
+    summary_table.add_column("Wert", style="cyan")
+
+    summary_table.add_row("Dauer", f"{result.duration:.1f} s")
+    summary_table.add_row("τ_M", f"{result.tau_m:.1f} s")
+    summary_table.add_row("Anesthesia-Ereignisse", str(result.n_events()))
+    summary_table.add_row("Anesthesia-Zeit", f"{result.total_anesthesia_time():.1f} s")
+    summary_table.add_row(
+        "Bewusst-Anteil",
+        f"{result.consciousness_fraction():.4f}  ({100 * result.consciousness_fraction():.1f}%)",
+    )
+    summary_table.add_row("R_loss (Kohärenzverlust)", f"{result.loss_rate:.4f}")
+    summary_table.add_row("R_rec (Wiederherstellung)", f"{result.recovery_rate:.4f}")
+
+    console.print(summary_table)
+
+    if result.events:
+        ev_table = Table(title="Anesthesia-Ereignisse", show_header=True, box=None, padding=(0, 2))
+        ev_table.add_column("#", style="bold magenta")
+        ev_table.add_column("t_start [s]", style="cyan")
+        ev_table.add_column("t_end [s]", style="cyan")
+        ev_table.add_column("Dauer [s]", style="yellow")
+        ev_table.add_column("Tiefe", style="dim")
+        ev_table.add_column("R_rec", style="green")
+        for i, ev in enumerate(result.events, 1):
+            t_end_str = f"{ev.t_end:.1f}" if ev.t_end is not None else "–"
+            dur_str = f"{ev.duration:.1f}" if ev.duration is not None else "–"
+            ev_table.add_row(
+                str(i),
+                f"{ev.t_start:.1f}",
+                t_end_str,
+                dur_str,
+                f"{ev.depth:.4f}",
+                f"{ev.recovery:.4f}",
+            )
+        console.print(ev_table)
+    else:
+        console.print("\n[green]Keine Anesthesia-Ereignisse erkannt.[/green]")
+
+    if show_timeline:
+        tl_table = Table(
+            title="Frame-Buffer Zeitreihe (Auszug)", show_header=True, box=None, padding=(0, 2)
+        )
+        tl_table.add_column("t [s]", style="bold magenta")
+        tl_table.add_column("Φ_buf", style="cyan")
+        tl_table.add_column("Status", style="dim")
+        from .medium.modulation import ANESTHESIA_THRESHOLD
+
+        step = max(1, len(result.times) // 20)
+        for i in range(0, len(result.times), step):
+            t_val = result.times[i]
+            m_val = result.frame_means[i]
+            status = "[green]●[/green]" if m_val > ANESTHESIA_THRESHOLD else "[red]◌[/red]"
+            tl_table.add_row(f"{t_val:.1f}", f"{m_val:.5f}", status)
+        console.print(tl_table)
+
+
+# ---------------------------------------------------------------------------
+# medium-modulate (v0.3.0)
+# ---------------------------------------------------------------------------
+
+
+@app.command(name="medium-modulate")
+def medium_modulate(
+    t_max: Annotated[float, typer.Option("--t-max", "-t", help="Endzeit [s]")] = 240.0,
+    tau_m: Annotated[float, typer.Option("--tau-m", help="Medium-Zeitkonstante τ_M [s]")] = 120.0,
+    m0: Annotated[float, typer.Option("--m0", help="Initial-Amplitude M_0 (normiert)")] = 1.0,
+    n_steps: Annotated[int, typer.Option("--steps", "-n", help="Anzahl Zeitschritte")] = 12,
+) -> None:
+    """[bold]Medium-Modulation[/bold] – Feld-Medium-Wechselwirkung.
+
+    Berechnet die Medium-Amplitude M(t) = M_0·exp(−t/τ_M) und
+    Modulationstiefe ΔM(t) für einen linearen Zeitbereich.
+
+    Examples:
+
+      ig medium-modulate
+
+      ig medium-modulate --t-max 600 --tau-m 180 --steps 20
+    """
+    from .medium.modulation import MediumModulator
+
+    mod = MediumModulator(m0=m0, tau_m=tau_m)
+
+    console.print(
+        Panel(
+            f"[bold cyan]Medium-Modulation[/bold cyan]  "
+            f"M₀=[yellow]{m0:.2f}[/yellow]  "
+            f"τ_M=[yellow]{tau_m:.0f}s[/yellow]  "
+            f"t_max=[yellow]{t_max:.0f}s[/yellow]",
+            expand=False,
+        )
+    )
+
+    states = mod.modulation_series(t_max=t_max, n_steps=n_steps)
+
+    table = Table(show_header=True, box=None, padding=(0, 2))
+    table.add_column("t [s]", style="bold magenta")
+    table.add_column("M(t)", style="cyan")
+    table.add_column("ΔM(t)", style="yellow")
+    table.add_column("norm", style="dim")
+    table.add_column("Status", style="dim")
+    from .medium.modulation import ANESTHESIA_THRESHOLD
+
+    for s in states:
+        status = "[green]CONSCIOUS[/green]" if s.conscious else "[red]ANESTHESIA[/red]"
+        table.add_row(
+            f"{s.t:.1f}",
+            f"{s.m_t:.5f}",
+            f"{s.delta_m:.5f}",
+            f"{s.normalized:.5f}",
+            status,
+        )
+
+    console.print(table)
+    console.print(
+        f"\n[dim]Anesthesia-Schwellwert Θ = [cyan]{ANESTHESIA_THRESHOLD:.6f}[/cyan][/dim]\n"
+        f"[dim]R_loss(T={t_max:.0f}s) = [cyan]{mod.frame_loss(t_max):.4f}[/cyan]  "
+        f"R_rec = [cyan]{mod.recovery_rate(t_max):.4f}[/cyan][/dim]"
+    )
+
+
+# ---------------------------------------------------------------------------
 # entry point
 # ---------------------------------------------------------------------------
 

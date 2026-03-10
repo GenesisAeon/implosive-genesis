@@ -594,3 +594,78 @@ class TestFullSummary:
         s1 = model.full_summary(n=2, temperature=300.0, samples=100, seed=7)
         s2 = model.full_summary(n=2, temperature=300.0, samples=100, seed=7)
         assert s1.v_rig_result.v_rig == s2.v_rig_result.v_rig
+
+
+# ===========================================================================
+# FramePrinciple v0.3.0 – OIPK-Integration (neue Tests)
+# ===========================================================================
+
+
+class TestFrameprincipleV030:
+    """Tests für die v0.3.0-Erweiterungen des Frameprinciple."""
+
+    def test_dimension_axiom_constant(self) -> None:
+        from implosive_genesis.theory.frameprinciple import DIMENSION_AXIOM
+
+        assert "dimension" in DIMENSION_AXIOM.lower()
+        assert "collapse" in DIMENSION_AXIOM.lower()
+
+    def test_dimension_axiom_method(self) -> None:
+        fp = FramePrinciple()
+        axiom = fp.dimension_axiom()
+        assert isinstance(axiom, str)
+        assert len(axiom) > 10
+
+    def test_emergent_dimension_entry_type(self) -> None:
+        from implosive_genesis.theory.frameprinciple import EmergentDimensionEntry
+
+        fp = FramePrinciple()
+        d = fp.emergent_dimension(5)
+        assert isinstance(d, EmergentDimensionEntry)
+
+    def test_emergent_dimension_n_stored(self) -> None:
+        fp = FramePrinciple()
+        d = fp.emergent_dimension(3)
+        assert d.n == 3
+
+    def test_emergent_dimension_nonneg_dim(self) -> None:
+        fp = FramePrinciple()
+        for n in range(10):
+            assert fp.emergent_dimension(n).dimension >= 0
+
+    def test_emergent_dimension_large_n_positive(self) -> None:
+        fp = FramePrinciple()
+        d = fp.emergent_dimension(15)
+        assert d.dimension >= 1
+
+    def test_dimension_series_length(self) -> None:
+        fp = FramePrinciple()
+        series = fp.dimension_series(n_max=6)
+        assert len(series) == 7
+
+    def test_dimension_series_n_values(self) -> None:
+        fp = FramePrinciple()
+        for i, d in enumerate(fp.dimension_series(n_max=5)):
+            assert d.n == i
+
+    def test_oipk_kernel_tau_oipk(self) -> None:
+        kernel = OIPKernel(lambda_m=1e-6)
+        expected = 1e-6 / C_LIGHT
+        assert abs(kernel.tau_oipk() - expected) < 1e-30
+
+    def test_oipk_kernel_tau_perp_ratio(self) -> None:
+        kernel = OIPKernel()
+        from implosive_genesis.core.physics import PHI as _PHI
+
+        ratio = kernel.tau_perp() / kernel.tau_oipk()
+        assert abs(ratio - 1.0 / _PHI) < 1e-12
+
+    def test_theory_init_exports_dimension_axiom(self) -> None:
+        from implosive_genesis import theory
+
+        assert hasattr(theory, "DIMENSION_AXIOM")
+
+    def test_theory_init_exports_emergent_dimension_entry(self) -> None:
+        from implosive_genesis import theory
+
+        assert hasattr(theory, "EmergentDimensionEntry")
