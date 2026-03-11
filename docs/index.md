@@ -8,8 +8,9 @@
 [![DOI v0.1.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
 [![DOI v0.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
 [![DOI v0.3.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18942660.svg)](https://doi.org/10.5281/zenodo.18942660)
+[![DOI v0.4.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18956822.svg)](https://doi.org/10.5281/zenodo.18956822)
 
-**Zenodo DOI**: https://doi.org/10.5281/zenodo.18942660
+**Zenodo DOI**: https://doi.org/10.5281/zenodo.18956822
 **Live Docs**: https://genesisaeon.github.io/implosive-genesis/
 
 ---
@@ -88,7 +89,7 @@ $$P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi)$$
   title   = {Implosive Genesis: Rekursive Entstehung von Raum, Zeit und Bewusstsein},
   year    = {2025},
   version = {0.1.0},
-  doi     = {10.5281/zenodo.XXXXXXX},
+  doi     = {10.5281/zenodo.18956822},
   url     = {https://github.com/GenesisAeon/implosive-genesis}
 }
 ```
