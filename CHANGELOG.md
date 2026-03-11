@@ -5,6 +5,35 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), version
 
 ---
 
+## [0.4.0] – 2026-03-10
+
+**Fraktale Rendering-Engine & Chronologie-Abschluss** – vollständige 10-Teile-Chronologie validiert, rekursive Phi-skalierte Tesseract-Rendering-Engine, zentrale ImplosiveGenesis-Klasse als Einstiegspunkt für alle Module.
+
+### Added
+- **Fraktale Tesseract-Rendering-Engine** (`render/fractal_tesseract.py`)
+  - Rekursive Phi-Skalierung: `β_n = β_0 · Φ^(n/3)`, `L_n = λ_OIPK · Φ^(n/3)`, `I_n = 1/Φ^n`
+  - ASCII-Animation + PNG/SVG-Export
+  - Neue CLI: `ig fractal-render --depth 8 [--animate --ascii]`
+- **Vollständige 10-Teile-Chronologie** (`chronology/`)
+  - `ChronologyValidator` prüft alle 10 Teile (UTAC → Type-6 → Entropy Governance → OIPK → Frameprinciple → …)
+  - 100 % Bestehensquote
+  - Neue CLI: `ig chronology-validate [--part 4 --verbose]`
+- **Zentrale ImplosiveGenesis-Klasse** (`core/genesis.py`)
+  - Verbindet alle Module in einer einzigen Instanz
+  - `full_summary(n=5)` → kompletter Überblick in einem Befehl
+  - Neue CLI: `ig full-summary`
+- **Tests**: 609 Tests (+160 neu), Coverage ≥ 90 %, ruff + pre-commit 100 % clean
+
+### Changed
+- `pyproject.toml`: Version auf `0.4.0` angehoben
+- `cli.py`: 3 neue Befehle registriert (`fractal-render`, `chronology-validate`, `full-summary`)
+
+### Fixed
+- ruff-Lint: Import-Sortierung, unused imports, E501, B017, E741, F541 bereinigt
+- Formatierung: alle geänderten Module per `ruff format` bereinigt
+
+---
+
 ## [0.3.0] – 2026-03-10
 
 **OIPK, Medium-Modulation & Anesthesia-Tests** – Frameprinciple vollständig implementiert, OIPK als geschlossene Gleichung, Medium-Modulation und Anesthesia-Frame-Buffer-Simulationen.
@@ -84,6 +113,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), version
 
 ---
 
+[0.4.0]: https://github.com/GenesisAeon/implosive-genesis/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/GenesisAeon/implosive-genesis/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/GenesisAeon/implosive-genesis/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.1.0

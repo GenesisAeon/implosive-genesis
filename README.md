@@ -8,11 +8,13 @@
 [![DOI v0.1.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18930089.svg)](https://doi.org/10.5281/zenodo.18930089)
 [![DOI v0.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18940541.svg)](https://doi.org/10.5281/zenodo.18940541)
 [![DOI v0.3.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18942660.svg)](https://doi.org/10.5281/zenodo.18942660)
+[![DOI v0.4.0](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.pending-blue)](https://doi.org/10.5281/zenodo.pending)
 [![PyPI](https://img.shields.io/pypi/v/implosive-genesis)](https://pypi.org/project/implosive-genesis/)
 
 **DOI (v0.1.0)**: [10.5281/zenodo.18930089](https://doi.org/10.5281/zenodo.18930089)
 **DOI (v0.2.0)**: [10.5281/zenodo.18940541](https://doi.org/10.5281/zenodo.18940541)
 **DOI (v0.3.0)**: [10.5281/zenodo.18942660](https://doi.org/10.5281/zenodo.18942660)
+**DOI (v0.4.0)**: _wird nach Zenodo-Publish eingefügt_
 **Dokumentation**: [genesisaeon.github.io/implosive-genesis](https://genesisaeon.github.io/implosive-genesis/)
 
 ---
@@ -150,7 +152,8 @@ src/implosive_genesis/
 ├── core/
 │   ├── physics.py           # PHI + PhiScaling
 │   ├── vrig.py              # V_RIG-Berechnung + Monte-Carlo
-│   └── type6.py             # Type-6-Bewusstseinszustand
+│   ├── type6.py             # Type-6-Bewusstseinszustand
+│   └── genesis.py           # Zentrale ImplosiveGenesis-Klasse
 ├── theory/
 │   ├── frameprinciple.py    # OIPKernel + FramePrinciple (DIMENSION_AXIOM)
 │   ├── tesseract.py         # Tesseract-Zeitscheiben + CREP
@@ -162,6 +165,9 @@ src/implosive_genesis/
 ├── simulation/
 │   ├── entropy_governance.py
 │   └── cosmic_moments.py
+├── render/
+│   └── fractal_tesseract.py # Fraktale Phi-skalierte Rendering-Engine
+├── chronology/              # 10-Teile-Chronologie-Validator
 └── templates/
     ├── minimal.py           # Minimales Python-Paket-Template
     └── genesis.py           # Erweitertes Template mit Domain-YAML
@@ -198,17 +204,20 @@ src/implosive_genesis/
 - [x] CLI: `ig entropy-price-sympy`, `ig tesseract-render`, `ig cmb-test`, `ig phi-proof`
 - [x] 323 Tests, Coverage ≥ 99 %
 
-### v0.3.0 (aktuell)
+### v0.3.0
 - [x] OIPK-Kernel als geschlossene Gleichung (`oipk/kernel.py`)
 - [x] Frameprinciple vollendet (`DIMENSION_AXIOM`, `emergent_dimension()`)
 - [x] Medium-Modulation + Anesthesia-Simulation (`medium/modulation.py`)
 - [x] CLI: `ig oipk-calc`, `ig anesthesia-test`, `ig medium-modulate`
 - [x] 449 Tests (+126 neu), Coverage ≥ 92 %
 
-### v0.4.0 (geplant)
-- [ ] Fraktale Frame-Rendering-Engine + volle Tesseract-Integration
-- [ ] Empirische Anesthesia-Daten-Validierung
-- [ ] Finale Konsistenz-Checks mit Chronologie 1–10
+### v0.4.0 (aktuell – finale Version)
+- [x] Fraktale Tesseract-Rendering-Engine (`render/fractal_tesseract.py`)
+  - Rekursive Phi-Skalierung: `β_n = β_0 · Φ^(n/3)`, ASCII-Animation + PNG/SVG-Export
+- [x] Vollständige 10-Teile-Chronologie (`chronology/`) – 100 % bestanden
+- [x] Zentrale `ImplosiveGenesis`-Klasse (`core/genesis.py`) + `full_summary()`
+- [x] CLI: `ig fractal-render`, `ig chronology-validate`, `ig full-summary`
+- [x] 609 Tests (+160 neu), Coverage ≥ 90 %, ruff + pre-commit 100 % clean
 
 ### Langfristig
 - [ ] Integration mit bestehenden Quantenmechanik-Bibliotheken (QuTiP, Qiskit)
@@ -246,8 +255,18 @@ Wenn Sie Implosive Genesis in einer wissenschaftlichen Arbeit verwenden:
   year      = {2026},
   version   = {0.3.0},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.[DOI-PENDING]},
+  doi       = {10.5281/zenodo.18942660},
   url       = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.3.0}
+}
+
+@software{implosive_genesis_2026_v04,
+  author    = {GenesisAeon},
+  title     = {Implosive Genesis – Fraktale Rendering-Engine \& Chronologie-Abschluss},
+  year      = {2026},
+  version   = {0.4.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.[DOI-HIER-EINFÜGEN]},
+  url       = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.4.0}
 }
 ```
 
