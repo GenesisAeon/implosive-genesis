@@ -1,75 +1,75 @@
-# Anesthesia-Tests – Frame-Buffer-Simulation bei Bewusstseinsverlust
+# Anesthesia Tests – Frame-Buffer Simulation During Loss of Consciousness
 
-Die **Anesthesia-Simulation** modelliert den schrittweisen Kollaps des
-Frame-Buffers während eines Bewusstseinsverlusts (Anesthesia-Zustand) im
-Implosive-Genesis-Rahmen. Sie quantifiziert, wann und wie das rekursive
-Feld-Medium den Anesthesia-Schwellwert unterschreitet.
+The **anesthesia simulation** models the stepwise collapse of the frame buffer
+during loss of consciousness (anesthesia state) within the Implosive Genesis
+framework. It quantifies when and how the recursive field medium falls below
+the anesthesia threshold.
 
 ---
 
-## Konzept
+## Concept
 
-Im V_RIG-Framework wird Bewusstsein als kohärenter Frame-Buffer modelliert:
-Ein Satz von $N$ Frame-Amplituden $F_i$, deren Mittelwert $\Phi_{buf}$ über
-dem **Anesthesia-Schwellwert** $\Theta_{anes}$ liegen muss:
+In the V_RIG framework, consciousness is modelled as a coherent frame buffer:
+a set of $N$ frame amplitudes $F_i$ whose mean $\Phi_{buf}$ must remain above
+the **anesthesia threshold** $\Theta_{anes}$:
 
 $$\Phi_{buf} = \frac{1}{N} \sum_{i=0}^{N-1} F_i$$
 
-$$\text{bewusst} \iff \Phi_{buf} > \Theta_{anes}$$
+$$\text{conscious} \iff \Phi_{buf} > \Theta_{anes}$$
 
 ---
 
-## Physikalische Modellierung
+## Physical Modelling
 
-### Medium-Abklingkurve
+### Medium Decay Curve
 
-Das neuronale Medium wird als exponentiell abklingendes System modelliert:
+The neural medium is modelled as an exponentially decaying system:
 
 $$M(t) = M_0 \cdot \exp\!\left(-\frac{t}{\tau_M}\right)$$
 
 $$\Delta M(t) = M_0 \cdot \left(1 - \exp\!\left(-\frac{t}{\tau_M}\right)\right)$$
 
-wobei $\tau_M$ die charakteristische Zeitkonstante des Mediums ist.
+where $\tau_M$ is the characteristic time constant of the medium.
 
-### Anesthesia-Schwellwert
+### Anesthesia Threshold
 
-Der Schwellwert ergibt sich direkt aus den OIPK-Parametern:
+The threshold follows directly from the OIPK parameters:
 
 $$\Theta_{anes} = \frac{\alpha_\Phi}{\Phi^2} = \frac{1}{S_F} \approx 0.004504$$
 
-Da $S_F = \Phi^2 / \alpha_\Phi \approx 221.9$ ist, liegt der Schwellwert sehr
-niedrig – Bewusstsein ist robust gegenüber kleinen Fluktuationen.
+Since $S_F = \Phi^2 / \alpha_\Phi \approx 221.9$, the threshold is very low –
+consciousness is robust against small fluctuations.
 
-### Frame-Kohärenzverlust
+### Frame Coherence Loss
 
-Der Gesamtkohärenzverlust nach Dauer $T$:
+Total coherence loss after duration $T$:
 
 $$R_{loss} = 1 - \exp\!\left(-\frac{T}{\tau_M}\right)$$
 
-### Wiederherstellungsrate
+### Recovery Rate
 
-Die Erholung nach Anesthesia folgt einer Phi-verlängerten Zeitkonstante:
+Recovery after anesthesia follows a Phi-extended time constant:
 
 $$R_{rec} = \exp\!\left(-\frac{T}{\tau_M \cdot \Phi}\right)$$
 
-Die Phi-Skalierung spiegelt das geometrisch optimierte Wiederherstellungsprofil
-wider: Erholung ist langsamer als Verlust, was physiologisch beobachtete
-Aufwachphasen erklärt.
+The Phi-scaling reflects the geometrically optimised recovery profile:
+recovery is slower than loss, which explains physiologically observed
+wake-up phases.
 
 ---
 
-## Simulationsablauf
+## Simulation Flow
 
 ```
-t=0: Buffer leer → Φ_buf = 0 (Anesthesia)
-t→: M(t) eingefügt → Buffer füllt sich
-    Solange Φ_buf ≤ Θ_anes: Anesthesia-Ereignis aktiv
-    Sobald Φ_buf > Θ_anes: Erholung, Ereignis geschlossen
+t=0: buffer empty → Φ_buf = 0 (anesthesia)
+t→: M(t) inserted → buffer fills
+    while Φ_buf ≤ Θ_anes: anesthesia event active
+    once  Φ_buf > Θ_anes: recovery, event closed
 ```
 
 ---
 
-## API-Referenz
+## API Reference
 
 ```python
 from implosive_genesis.medium.modulation import (
@@ -79,17 +79,17 @@ from implosive_genesis.medium.modulation import (
     FRAME_BUFFER_SIZE,
 )
 
-# Standard-Test (5 Minuten, τ_M = 120 s)
+# Default test (5 minutes, τ_M = 120 s)
 result = run_anesthesia_test(duration=300.0)
 print(result.summary())
 
-# Benutzerdefiniert
+# Custom parameters
 mod = MediumModulator(tau_m=60.0)
 result = mod.run_anesthesia_simulation(duration=600.0, dt=0.5)
-print(f"Ereignisse: {result.n_events()}")
-print(f"Bewusst-Anteil: {result.consciousness_fraction():.4f}")
+print(f"Events: {result.n_events()}")
+print(f"Conscious fraction: {result.consciousness_fraction():.4f}")
 
-# Frame-Buffer direkt
+# Frame buffer directly
 from implosive_genesis.medium.modulation import FrameBuffer
 buf = FrameBuffer(size=64)
 buf.push(0.9)
@@ -99,37 +99,37 @@ print(buf.is_conscious())  # True
 ### CLI
 
 ```bash
-# Standard-Test (300 s)
+# Default test (300 s)
 ig anesthesia-test
 
-# Benutzerdefiniert
+# Custom parameters
 ig anesthesia-test --duration 600 --tau-m 60
 
-# Mit Zeitreihe
+# With time series
 ig anesthesia-test --duration 300 --timeline
 ```
 
 ---
 
-## Parameter-Übersicht
+## Parameter Overview
 
-| Parameter | Symbol | Standard | Beschreibung |
-|---|---|---|---|
-| Dauer | $T$ | 300 s | Testlänge |
-| Zeitkonstante | $\tau_M$ | 120 s | Medium-Abkling-τ |
-| Zeitschritt | $\Delta t$ | 1 s | Simulationsauflösung |
-| Buffer-Größe | $N$ | 64 | Frame-Buffer-Kapazität |
-| Schwellwert | $\Theta_{anes}$ | ≈ 0.004504 | Anesthesia-Grenze |
+| Parameter | Symbol | Default | Description |
+|-----------|--------|---------|-------------|
+| Duration | $T$ | 300 s | Test length |
+| Time constant | $\tau_M$ | 120 s | Medium decay τ |
+| Time step | $\Delta t$ | 1 s | Simulation resolution |
+| Buffer size | $N$ | 64 | Frame buffer capacity |
+| Threshold | $\Theta_{anes}$ | ≈ 0.004504 | Anesthesia boundary |
 
 ---
 
-## Zusammenhang mit anderen Modulen
+## Relationship to Other Modules
 
 ```
 MediumModulator
-  └── FrameBuffer             (Ringpuffer für Frame-Amplituden)
+  └── FrameBuffer             (ring buffer for frame amplitudes)
         ↕
-  ANESTHESIA_THRESHOLD        (aus OIPK: α_Φ / Φ² = 1/S_F)
+  ANESTHESIA_THRESHOLD        (from OIPK: α_Φ / Φ² = 1/S_F)
         ↕
   OIPKKernel                  (oipk/kernel.py)
         ↕
@@ -138,8 +138,8 @@ MediumModulator
 
 ---
 
-## Referenz
+## Reference
 
-- Modul: `implosive_genesis.medium.modulation`
+- Module: `implosive_genesis.medium.modulation`
 - CLI: `ig anesthesia-test`
-- Verwandte Konzepte: [OIPK](oipk.md), [Frame-Prinzip](frameprinciple.md)
+- Related concepts: [OIPK](oipk.md), [Frame Principle](frameprinciple.md)

@@ -1,15 +1,15 @@
-# Vollständige 10-Teile-Chronologie
+# Full 10-Part Chronology
 
-**Modul**: `implosive_genesis.chronology.integration`
+**Module**: `implosive_genesis.chronology.integration`
 **Version**: v0.4.0
 
 ---
 
-## Überblick
+## Overview
 
-Die **10-Teile-Chronologie** des Implosive-Genesis-Frameworks bildet alle
-zentralen theoretischen Konzepte auf konkrete Implementierungsmodule ab.
-Der `ChronologyValidator` prüft die numerische Konsistenz aller 10 Teile.
+The **10-part chronology** of the Implosive Genesis framework maps all central
+theoretical concepts to concrete implementation modules.
+The `ChronologyValidator` checks the numerical consistency of all 10 parts.
 
 ```bash
 ig chronology-validate
@@ -18,47 +18,47 @@ ig chronology-validate --part 4 --verbose
 
 ---
 
-## Die 10 Teile
+## The 10 Parts
 
-### Teil 1 – Phi-Skalierung & geometrischer Verschnitt
+### Part 1 – Phi-Scaling & Geometric Waste
 
-**Module**: `core.physics`, `render.fractal_tesseract`
-**Formel**: $\beta_n = \beta_0 \cdot \Phi^{n/3}$
+**Modules**: `core.physics`, `render.fractal_tesseract`
+**Formula**: $\beta_n = \beta_0 \cdot \Phi^{n/3}$
 
-Der Goldene Schnitt $\Phi = (1+\sqrt{5})/2 \approx 1.618$ minimiert den geometrischen
-Verschnitt in rekursiven Implosionsgittern:
+The golden ratio $\Phi = (1+\sqrt{5})/2 \approx 1.618$ minimises geometric
+waste in recursive implosion lattices:
 
 $$W(n) = 1 - \frac{1}{\Phi^{n/3}}$$
 
 ---
 
-### Teil 2 – V_RIG Urimpuls & kosmischer Alpha
+### Part 2 – V_RIG Primordial Impulse & Cosmic Alpha
 
-**Module**: `core.vrig`
-**Formel**: $\alpha_\Phi = \alpha \cdot \Phi$
+**Modules**: `core.vrig`
+**Formula**: $\alpha_\Phi = \alpha \cdot \Phi$
 
-$V_{RIG} = 1352$ km/s ist die Grundgeschwindigkeit des rekursiven Urimpulses.
-Der kosmische Alpha-Parameter $\alpha_\Phi = \alpha \cdot \Phi \approx 0.01180$
-verknüpft Feinstrukturkonstante und Goldenen Schnitt.
-
----
-
-### Teil 3 – Type-6 Bewusstseinsstufe & UTAC
-
-**Module**: `core.type6`
-**Formel**: $f(x) = \frac{1}{1 + e^{k \cdot x}}$
-
-UTAC (Universal Transition of Awareness and Consciousness) auf Stufe 6
-modelliert rekursive Selbstwahrnehmung als physikalischen Zustand.
+$V_{RIG} = 1352$ km/s is the base velocity of the recursive primordial impulse.
+The cosmic alpha parameter $\alpha_\Phi = \alpha \cdot \Phi \approx 0.01180$
+links the fine-structure constant and the golden ratio.
 
 ---
 
-### Teil 4 – OIPK Kern & τ ⊥ t Orthogonalität
+### Part 3 – Type-6 Consciousness Level & UTAC
 
-**Module**: `oipk.kernel`, `theory.frameprinciple`
-**Formel**: $\tau \perp t \Leftrightarrow \langle\tau, t\rangle = 0$
+**Modules**: `core.type6`
+**Formula**: $f(x) = \frac{1}{1 + e^{k \cdot x}}$
 
-Das Ontologische Implosive Prinzip der Kohärenz (OIPK) definiert:
+UTAC (Universal Transition of Awareness and Consciousness) at level 6
+models recursive self-perception as a physical state.
+
+---
+
+### Part 4 – OIPK Kernel & τ ⊥ t Orthogonality
+
+**Modules**: `oipk.kernel`, `theory.frameprinciple`
+**Formula**: $\tau \perp t \Leftrightarrow \langle\tau, t\rangle = 0$
+
+The Ontological Implosive Principle of Coherence (OIPK) defines:
 
 $$\Theta = \arccos\!\left(-\frac{1}{\Phi}\right) \approx 128.17°$$
 
@@ -66,71 +66,71 @@ $$CREP = E_{OIPK} \cdot S_F \cdot \frac{\Phi}{c}$$
 
 ---
 
-### Teil 5 – Frameprinciple & Dimensionsaxiom
+### Part 5 – Frameprinciple & Dimension Axiom
 
-**Module**: `theory.frameprinciple`
-**Formel**: $D_n = \lceil\log_\Phi(I_n / E_0)\rceil$
+**Modules**: `theory.frameprinciple`
+**Formula**: $D_n = \lceil\log_\Phi(I_n / E_0)\rceil$
 
 > **DIMENSION_AXIOM**: "A dimension emerges when information would otherwise collapse."
 
-Kohärenzlänge: $L_n = \lambda_{OIPK} \cdot \Phi^{n/3}$
+Coherence length: $L_n = \lambda_{OIPK} \cdot \Phi^{n/3}$
 
 ---
 
-### Teil 6 – Tesseract-Zeitstruktur & CREP
+### Part 6 – Tesseract Time Structure & CREP
 
-**Module**: `theory.tesseract`
-**Formel**: $T_n = t_0 \cdot \Phi^n$
+**Modules**: `theory.tesseract`
+**Formula**: $T_n = t_0 \cdot \Phi^n$
 
-Vierdimensionales Volumen: $V_{4D}(n) = T_n^4$
+Four-dimensional volume: $V_{4D}(n) = T_n^4$
 
-Entropischer Preis: $P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi)$
-
----
-
-### Teil 7 – Entropischer Preis & SymPy-Formalisierung
-
-**Module**: `formalization.entropic_price`, `formalization.phi_scaling`
-**Formel**: $P_E = \Delta S \cdot k_B \cdot T_{Planck}$
-
-Formale SymPy-Ableitung des entropischen Preises und Phi-Skalierungs-Beweis.
+Entropic price: $P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi)$
 
 ---
 
-### Teil 8 – Medium-Modulation & Anästhesie-Tests
+### Part 7 – Entropic Price & SymPy Formalisation
 
-**Module**: `medium.modulation`
-**Formel**: $M(t) = M_0 \cdot e^{-t/\tau_M}$
+**Modules**: `formalization.entropic_price`, `formalization.phi_scaling`
+**Formula**: $P_E = \Delta S \cdot k_B \cdot T_{Planck}$
 
-Anästhesie-Schwellwert: $\Theta = \alpha_\Phi / \Phi^2 \approx 0.004504$
-
-Frame-Buffer-Simulation modelliert Bewusstseinsverlust.
+Formal SymPy derivation of the entropic price and Phi-scaling proof.
 
 ---
 
-### Teil 9 – Fraktale Rendering-Engine & Phi-Visualisierung
+### Part 8 – Medium Modulation & Anesthesia Tests
 
-**Module**: `render.fractal_tesseract`
-**Formel**: $I_n = 1/\Phi^n$
+**Modules**: `medium.modulation`
+**Formula**: $M(t) = M_0 \cdot e^{-t/\tau_M}$
 
-Rekursive Phi-skalierte Frame-Rendering-Engine.
-ASCII-Animation + SVG/PNG-Export der Tesseract-Strukturen.
+Anesthesia threshold: $\Theta = \alpha_\Phi / \Phi^2 \approx 0.004504$
 
----
-
-### Teil 10 – Zentrale Integration & Gesamtkonsistenz
-
-**Module**: `core.integration`
-**Formel**: $V_{RIG} \cdot \Phi / c = \lambda_{OIPK} \cdot \alpha_\Phi \cdot V_{RIG} / c$
-
-ImplosiveGenesis-Klasse verknüpft alle Komponenten.
-Konsistenzprüfung: $V_{RIG} \leftrightarrow \Phi \leftrightarrow \alpha \leftrightarrow OIPK \leftrightarrow CREP \leftrightarrow Anästhesie$
-
-Goldene Identität (Abschluss): $\Phi^2 = \Phi + 1$
+Frame-buffer simulation models loss of consciousness.
 
 ---
 
-## Schnellstart
+### Part 9 – Fractal Rendering Engine & Phi Visualisation
+
+**Modules**: `render.fractal_tesseract`
+**Formula**: $I_n = 1/\Phi^n$
+
+Recursive Phi-scaled frame rendering engine.
+ASCII animation + SVG/PNG export of Tesseract structures.
+
+---
+
+### Part 10 – Central Integration & Overall Consistency
+
+**Modules**: `core.integration`
+**Formula**: $V_{RIG} \cdot \Phi / c = \lambda_{OIPK} \cdot \alpha_\Phi \cdot V_{RIG} / c$
+
+The ImplosiveGenesis class links all components.
+Consistency check: $V_{RIG} \leftrightarrow \Phi \leftrightarrow \alpha \leftrightarrow OIPK \leftrightarrow CREP \leftrightarrow \text{Anesthesia}$
+
+Golden identity (closure): $\Phi^2 = \Phi + 1$
+
+---
+
+## Quick Start
 
 ```python
 from implosive_genesis.chronology.integration import ChronologyValidator
@@ -138,10 +138,10 @@ from implosive_genesis.chronology.integration import ChronologyValidator
 v = ChronologyValidator()
 result = v.validate()
 print(result.summary)
-assert result.passed  # alle 10 Teile bestanden
+assert result.passed  # all 10 parts passed
 ```
 
-Einzelnen Teil validieren:
+Validate a single part:
 
 ```python
 result = v.validate_part(4)  # OIPK & τ ⊥ t
@@ -158,10 +158,10 @@ print(result.checks)
 ChronologyValidator(tolerance: float = 1e-6)
 ```
 
-| Methode | Beschreibung |
-|---------|-------------|
-| `validate()` | Alle 10 Teile → `ChronologyResult` |
-| `validate_part(n)` | Einzelner Teil → `PartValidationResult` |
+| Method | Description |
+|--------|-------------|
+| `validate()` | All 10 parts → `ChronologyResult` |
+| `validate_part(n)` | Single part → `PartValidationResult` |
 
 ### `ChronologyResult`
 
@@ -186,12 +186,12 @@ CHRONOLOGY_PARTS: tuple[ChronologyPart, ...]  # 10 frozen dataclasses
 
 ---
 
-## Zentraler Zugriff via `ImplosiveGenesis`
+## Central Access via `ImplosiveGenesis`
 
 ```python
 from implosive_genesis.core.integration import ImplosiveGenesis
 
 ig = ImplosiveGenesis()
 result = ig.validate_chronology()
-print(f"{result.n_passed}/10 Teile bestanden ({result.pass_rate:.0f}%)")
+print(f"{result.n_passed}/10 parts passed ({result.pass_rate:.0f}%)")
 ```

@@ -1,15 +1,15 @@
-# Fraktale Rendering-Engine
+# Fractal Rendering Engine
 
-**Modul**: `implosive_genesis.render.fractal_tesseract`
+**Module**: `implosive_genesis.render.fractal_tesseract`
 **Version**: v0.4.0
 
 ---
 
-## Überblick
+## Overview
 
-Die **FractalTesseract**-Klasse implementiert eine rekursive Phi-skalierte Frame-Rendering-Engine.
-Jede Tiefenebene skaliert geometrisch mit dem Goldenen Schnitt Φ und bildet so die
-Tesseract-Zeitscheiben als visuelle Strukturen ab.
+The **FractalTesseract** class implements a recursive Phi-scaled frame rendering engine.
+Each depth level scales geometrically with the golden ratio Φ, mapping the
+Tesseract time slices as visual structures.
 
 $$\beta_n = \beta_0 \cdot \Phi^{n/3}$$
 
@@ -21,7 +21,7 @@ $$I_n = \frac{1}{\Phi^n}$$
 
 ---
 
-## Schnellstart
+## Quick Start
 
 ```python
 from implosive_genesis.render.fractal_tesseract import FractalTesseract
@@ -47,19 +47,19 @@ ig fractal-render --depth 6 --ascii
 ```python
 FractalTesseract(
     beta_0: float = 1.0,
-    l0: float | None = None,       # Standard: λ_OIPK ≈ 221.7 m
-    t0: float | None = None,       # Standard: t_Planck ≈ 5.39e-44 s
+    l0: float | None = None,       # default: λ_OIPK ≈ 221.7 m
+    t0: float | None = None,       # default: t_Planck ≈ 5.39e-44 s
     branch_factor: int = 2,
 )
 ```
 
-**Methoden**:
+**Methods**:
 
-| Methode | Beschreibung |
-|---------|-------------|
-| `render(depth, animate)` | Vollständiges Rendering → `RenderResult` |
-| `render_ascii(depth)` | Nur ASCII-String |
-| `frame_at(depth)` | Einzelner `FractalFrame` ohne Kinder |
+| Method | Description |
+|--------|-------------|
+| `render(depth, animate)` | Full rendering → `RenderResult` |
+| `render_ascii(depth)` | ASCII string only |
+| `frame_at(depth)` | Single `FractalFrame` without children |
 | `phi_scale(n)` | Φ^{n/3} |
 | `coherence_length(n)` | L_n = L_0 · Φ^{n/3} |
 | `time_slice(n)` | T_n = t_0 · Φ^n |
@@ -101,7 +101,7 @@ class RenderResult:
 
 ---
 
-## Beispiel-ASCII-Ausgabe (`ig fractal-render --depth 5 --ascii`)
+## Example ASCII Output (`ig fractal-render --depth 5 --ascii`)
 
 ```
 FractalTesseract  depth=5  Φ≈1.6180  β₀=1.0  L₀=221.7m
@@ -117,9 +117,9 @@ FractalTesseract  depth=5  Φ≈1.6180  β₀=1.0  L₀=221.7m
 
 ---
 
-## Phi-Skalierungs-Tabelle
+## Phi-Scaling Table
 
-| Tiefe n | Φ^{n/3} | β_n | L_n [m] | I_n |
+| Depth n | Φ^{n/3} | β_n | L_n [m] | I_n |
 |---------|---------|-----|---------|-----|
 | 0 | 1.0000 | 1.0000 | 221.74 | 1.0000 |
 | 1 | 1.1736 | 1.1736 | 260.19 | 0.6180 |
@@ -133,10 +133,10 @@ FractalTesseract  depth=5  Φ≈1.6180  β₀=1.0  L₀=221.7m
 
 ---
 
-## Verbindung zu anderen Modulen
+## Relationship to Other Modules
 
-- **`core.physics`**: PHI-Konstante, β_n-Formel
-- **`theory.frameprinciple`**: Kohärenzlänge L_n, λ_OIPK
-- **`theory.tesseract`**: Zeitscheiben T_n
-- **`core.integration`**: ImplosiveGenesis-Klasse (zentraler Zugriff)
-- **`chronology.integration`**: Teil 9 der Chronologie
+- **`core.physics`**: PHI constant, β_n formula
+- **`theory.frameprinciple`**: coherence length L_n, λ_OIPK
+- **`theory.tesseract`**: time slices T_n
+- **`core.integration`**: ImplosiveGenesis class (central access)
+- **`chronology.integration`**: Part 9 of the chronology

@@ -1,30 +1,30 @@
-# Tesseract, CREP und entropischer Preis
+# Tesseract, CREP and Entropic Price
 
-Das **Tesseract-Modell** beschreibt die 4-dimensionale Zeitstruktur des
-Implosive-Genesis-Rahmens. Zeitscheiben $T_n$ skalieren mit dem Goldenen
-Schnitt $\Phi$. **CREP** (Collapse-Resonance-Entropy-Price) quantifiziert
-den thermodynamischen Preis des implosiven Kollapses.
+The **Tesseract model** describes the 4-dimensional time structure of the
+Implosive Genesis framework. Time slices $T_n$ scale with the golden ratio
+$\Phi$. **CREP** (Collapse-Resonance-Entropy-Price) quantifies the
+thermodynamic cost of the implosive collapse.
 
 ---
 
-## Tesseract-Zeitscheiben
+## Tesseract Time Slices
 
-### Konzept
+### Concept
 
-Statt einer kontinuierlichen Zeit wird in der implosiven Feldtheorie die Zeit
-als diskretes Spektrum von **Zeitscheiben** $T_n$ modelliert. Jede Scheibe
-entspricht einer Rekursionsstufe $n$ und skaliert exponentiell mit $\Phi$:
+Instead of continuous time, implosive field theory models time as a discrete
+spectrum of **time slices** $T_n$. Each slice corresponds to a recursion
+level $n$ and scales exponentially with $\Phi$:
 
 $$T_n = t_0 \cdot \Phi^n$$
 
-Das **4D-Tesseraktvolumen** ergibt sich aus der vierten Potenz der Zeitscheibe:
+The **4D tesseract volume** is the fourth power of the time slice:
 
 $$V_{4D}(n) = T_n^4 = t_0^4 \cdot \Phi^{4n}$$
 
-### Resonanzfrequenz
+### Resonance Frequency
 
-Auf jeder Stufe $n$ gibt es eine charakteristische Resonanzfrequenz, die
-die dynamische Kopplung an $V_{RIG}$ herstellt:
+At each level $n$ there is a characteristic resonance frequency that
+establishes the dynamic coupling to $V_{RIG}$:
 
 $$f_R(n) = \frac{V_{RIG}}{T_n} = \frac{V_{RIG}}{t_0 \cdot \Phi^n}$$
 
@@ -35,17 +35,17 @@ from implosive_genesis.theory.tesseract import Tesseract
 
 ts = Tesseract(t_0=1.0)
 
-# Einzelne Zeitscheibe
+# Individual time slice
 print(ts.time_slice(3))          # T_3 = Φ³ ≈ 4.236
 
-# 4D-Volumen
+# 4D volume
 print(ts.volume_4d(3))           # T_3^4 ≈ 80.9
 
-# Serien
+# Series
 slices = ts.slice_series(5)      # [T_0, T_1, ..., T_5]
 volumes = ts.volume_series(5)    # [V_4D(0), ..., V_4D(5)]
 
-# Resonanzfrequenz (wenn t_0 in Sekunden)
+# Resonance frequency (when t_0 is in seconds)
 print(ts.resonance_frequency(3)) # f_R(3) in Hz
 ```
 
@@ -53,31 +53,30 @@ print(ts.resonance_frequency(3)) # f_R(3) in Hz
 
 ## CREP – Collapse-Resonance-Entropy-Price
 
-### Konzept
+### Concept
 
-CREP quantifiziert den **thermodynamischen Preis** des implosiven Kollapses:
-Die Energie, die beim Übergang auf eine höhere Rekursionsstufe in Entropie
-umgewandelt wird.
+CREP quantifies the **thermodynamic cost** of the implosive collapse:
+the energy converted to entropy during the transition to a higher recursion
+level.
 
-### CREP-Wert
+### CREP Value
 
 $$CREP = \frac{S_{total} \cdot V_{RIG}}{\Phi \cdot c^2}$$
 
-Der Faktor $\Phi \cdot c^2$ normiert auf die relativistische Energieskala
-des Goldenen Schnitts.
+The factor $\Phi \cdot c^2$ normalises to the relativistic energy scale of
+the golden ratio.
 
-### Entropischer Preis
+### Entropic Price
 
-Der entropische Preis auf Stufe $n$ bei Temperatur $T$ ist:
+The entropic price at level $n$ and temperature $T$ is:
 
 $$P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi)$$
 
-Dies ist äquivalent zu $k_B \cdot T \cdot \ln(\Phi^n)$ – dem klassischen
-Ausdruck für die freie Energie beim Übergang zwischen $\Phi^n$-fachen
-Zuständen.
+This is equivalent to $k_B \cdot T \cdot \ln(\Phi^n)$ – the classical
+expression for the free energy of a transition between $\Phi^n$-fold states.
 
-**Kosmischer Hintergrund:** Bei der CMB-Temperatur $T_{CMB} = 2.725\ \text{K}$
-ergibt sich für $n=3$:
+**Cosmic background:** At the CMB temperature $T_{CMB} = 2.725\ \text{K}$
+for $n=3$:
 
 $$P_E(3, 2.725\ \text{K}) \approx 1.54 \times 10^{-23}\ \text{J}$$
 
@@ -88,24 +87,24 @@ from implosive_genesis.theory.tesseract import CREP
 
 crep = CREP()
 
-# CREP-Wert für normierte Gesamtentropie
+# CREP value for normalised total entropy
 print(crep.crep_value(s_total=1.0))
 
-# Entropischer Preis bei CMB-Temperatur
+# Entropic price at CMB temperature
 print(crep.entropy_price(n=3, temperature=2.725))
 
-# Serie über mehrere Stufen
+# Series over multiple levels
 prices = crep.entropy_price_series(n_max=5, temperature=300.0)
 
-# Kumulativer CREP
+# Cumulative CREP
 total = crep.cumulative_crep([0.5, 1.0, 1.5, 2.0])
 ```
 
 ---
 
-## Vollständiges Modell
+## Full Model
 
-Tesseract und CREP sind in `ImplosiveGenesisModel` integriert:
+Tesseract and CREP are integrated into `ImplosiveGenesisModel`:
 
 ```python
 from implosive_genesis.theory.models import ImplosiveGenesisModel
@@ -115,7 +114,7 @@ summary = model.full_summary(n=3, temperature=2.725)
 print(summary)
 ```
 
-Ausgabe (Beispiel):
+Example output:
 
 ```
 FullSummary(n=3)
@@ -133,29 +132,29 @@ FullSummary(n=3)
 
 ---
 
-## Formeln im Überblick
+## Formula Overview
 
-| Größe | Formel | Modul |
-|---|---|---|
-| Zeitscheibe | $T_n = t_0 \cdot \Phi^n$ | `Tesseract` |
-| 4D-Volumen | $V_{4D}(n) = T_n^4$ | `Tesseract` |
-| Resonanzfrequenz | $f_R(n) = V_{RIG} / T_n$ | `Tesseract` |
-| Entropischer Preis | $P_E = n \cdot k_B \cdot T \cdot \ln\Phi$ | `CREP` |
-| CREP-Wert | $CREP = S \cdot V_{RIG} / (\Phi \cdot c^2)$ | `CREP` |
+| Quantity | Formula | Module |
+|----------|---------|--------|
+| Time slice | $T_n = t_0 \cdot \Phi^n$ | `Tesseract` |
+| 4D volume | $V_{4D}(n) = T_n^4$ | `Tesseract` |
+| Resonance frequency | $f_R(n) = V_{RIG} / T_n$ | `Tesseract` |
+| Entropic price | $P_E = n \cdot k_B \cdot T \cdot \ln\Phi$ | `CREP` |
+| CREP value | $CREP = S \cdot V_{RIG} / (\Phi \cdot c^2)$ | `CREP` |
 
 ---
 
-## Konstanten
+## Constants
 
-| Konstante | Symbol | Wert | Einheit |
-|---|---|---|---|
+| Constant | Symbol | Value | Unit |
+|----------|--------|-------|------|
 | `K_BOLTZMANN` | $k_B$ | $1.380649 \times 10^{-23}$ | J/K |
 | `C_LIGHT_MS` | $c$ | $299\,792\,458$ | m/s |
-| `T0_DEFAULT` | $t_0$ | $1.0$ | (normiert) |
+| `T0_DEFAULT` | $t_0$ | $1.0$ | (normalised) |
 
 ---
 
-## Referenz
+## Reference
 
-- Modul: `implosive_genesis.theory.tesseract`
-- Verwandte Konzepte: [OIPK](oipk.md), [Frame-Prinzip](frameprinciple.md)
+- Module: `implosive_genesis.theory.tesseract`
+- Related concepts: [OIPK](oipk.md), [Frame Principle](frameprinciple.md)
