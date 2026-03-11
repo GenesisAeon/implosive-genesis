@@ -1,19 +1,19 @@
 # Templates
 
-Implosive Genesis liefert zwei eingebaute Templates. Eigene Templates lassen sich mit einer einzigen Python-Datei hinzufügen.
+Implosive Genesis ships with two built-in templates. Custom templates can be added with a single Python file.
 
 ---
 
 ## `minimal`
 
-**Der Standard.** Ein sauberes, modernes Python-Projekt mit allem Notwendigen.
+**The default.** A clean, modern Python project with everything you need.
 
 ```bash
 ig scaffold my-lib
 ig scaffold my-lib --template minimal
 ```
 
-### Generierte Dateien
+### Generated Files
 
 ```
 my-lib/
@@ -32,71 +32,71 @@ my-lib/
 └── .pre-commit-config.yaml
 ```
 
-### Variablen
+### Variables
 
-| Variable | Standard | Beschreibung |
-|----------|---------|--------------|
-| `name` | *(Pflichtfeld)* | Projektname |
-| `description` | `"A Python project"` | Kurzbeschreibung |
-| `author` | `"Your Name"` | Autorenname |
-| `python_version` | `"3.11"` | Minimale Python-Version |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `name` | *(required)* | Project name |
+| `description` | `"A Python project"` | Short description |
+| `author` | `"Your Name"` | Author name |
+| `python_version` | `"3.11"` | Minimum Python version |
 
 ---
 
 ## `genesis`
 
-Eine Erweiterung von `minimal` – fügt eine `domains.yaml` für Domain/Metrik-Konfiguration und ein Entropietabellen-Bridge-Modul hinzu.
+An extension of `minimal` – adds a `domains.yaml` for domain/metric configuration and an entropy-table bridge module.
 
 ```bash
 ig scaffold my-physics-tool --template genesis
 ```
 
-### Zusätzliche Dateien
+### Additional Files
 
 ```
 my-physics-tool/
-├── domains.yaml           ← Domain/Metrik-Konfiguration
+├── domains.yaml           ← domain/metric configuration
 ├── config/
-│   └── entropy.yaml       ← Entropietabellen-Bridge-Konfiguration
+│   └── entropy.yaml       ← entropy-table bridge configuration
 └── src/
     └── my_physics_tool/
         ├── __init__.py
-        └── bridge.py      ← Entropietabellen-Export-Funktion
+        └── bridge.py      ← entropy-table export function
 ```
 
-### Zusätzliche Variablen
+### Additional Variables
 
-| Variable | Standard | Beschreibung |
-|----------|---------|--------------|
-| `metrics` | `"crep"` | Standard-Metrikkürzel |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `metrics` | `"crep"` | Default metric abbreviation |
 
 ---
 
-## Eigenes Template hinzufügen
+## Adding a Custom Template
 
-1. Datei `src/implosive_genesis/templates/my_template.py` erstellen:
+1. Create file `src/implosive_genesis/templates/my_template.py`:
 
 ```python
 TEMPLATE = {
     "name": "my_template",
-    "description": "Mein eigenes Template",
+    "description": "My custom template",
     "variables": ["name", "description", "author", "python_version"],
     "defaults": {
-        "description": "Ein Python-Projekt",
+        "description": "A Python project",
         "author": "Your Name",
         "python_version": "3.11",
     },
     "files": {
         "README.md": "# ${name}\n\n${description}\n",
         "pyproject.toml": "...",
-        # Schlüssel = relative Pfade, Werte = Template-Strings
-        # ${variable} für Substitution
-        # $$ für ein wörtliches Dollarzeichen
+        # keys = relative paths, values = template strings
+        # ${variable} for substitution
+        # $$ for a literal dollar sign
     },
 }
 ```
 
-2. In `src/implosive_genesis/templates/__init__.py` registrieren:
+2. Register it in `src/implosive_genesis/templates/__init__.py`:
 
 ```python
 from .my_template import TEMPLATE as MY_TEMPLATE
@@ -104,8 +104,8 @@ from .my_template import TEMPLATE as MY_TEMPLATE
 REGISTRY: dict[str, dict] = {
     "minimal": MINIMAL_TEMPLATE,
     "genesis": GENESIS_TEMPLATE,
-    "my_template": MY_TEMPLATE,  # ← hier hinzufügen
+    "my_template": MY_TEMPLATE,  # ← add here
 }
 ```
 
-`ig list-templates` zeigt das neue Template sofort an.
+`ig list-templates` will show the new template immediately.

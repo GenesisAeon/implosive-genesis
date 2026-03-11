@@ -1,5 +1,5 @@
 site_name: Implosive Genesis
-site_description: Rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6)
+site_description: Recursive Origin of Space, Time and Consciousness (V_RIG, OIPK, Frameprinciple, Type-6)
 site_author: GenesisAeon
 repo_url: https://github.com/GenesisAeon/implosive-genesis
 repo_name: GenesisAeon/implosive-genesis
@@ -50,19 +50,19 @@ extra_css: []
 
 nav:
   - Home: index.md
-  - Theorie:
-    - Frame-Prinzip: theory/frameprinciple.md
+  - Theory:
+    - Frame Principle: theory/frameprinciple.md
     - OIPK: theory/oipk.md
-    - Anesthesia-Tests: theory/anesthesia.md
+    - Anesthesia Tests: theory/anesthesia.md
     - Tesseract & CREP: theory/tesseract.md
-    - Entropischer Preis: theory/entropic_price.md
+    - Entropic Price: theory/entropic_price.md
   - Simulation:
-    - Tesseract-Visualisierung & CMB: simulation/tesseract.md
+    - Tesseract Visualisation & CMB: simulation/tesseract.md
   - Rendering (v0.4.0):
-    - Fraktale Engine: render/fractal.md
-  - Chronologie (v0.4.0):
-    - Vollständige 10-Teile-Chronologie: chronology/full.md
-  - API-Referenz: api.md
-  - Beispiele: examples.md
+    - Fractal Engine: render/fractal.md
+  - Chronology (v0.4.0):
+    - Full 10-Part Chronology: chronology/full.md
+  - API Reference: api.md
+  - Examples: examples.md
   - CLI Reference: cli.md
   - Templates: templates.md

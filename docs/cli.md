@@ -1,41 +1,41 @@
 # CLI Reference
 
-Das `ig`-Kommando ist der zentrale Einstiegspunkt für Implosive Genesis.
+The `ig` command is the central entry point for Implosive Genesis.
 
 ---
 
 ## `ig scaffold`
 
-Neues Projekt aus einem Template erstellen.
+Create a new project from a template.
 
 ```
 Usage: ig scaffold [OPTIONS] PROJECT_NAME
 
 Arguments:
-  PROJECT_NAME  Name des neuen Projekts (kebab-case empfohlen)
+  PROJECT_NAME  Name of the new project (kebab-case recommended)
 
 Options:
-  -t, --template TEXT       Template (Standard: minimal)
-  -o, --output-dir PATH     Elternverzeichnis für das neue Projekt
-  --author TEXT             Autorenname
-  --description TEXT        Kurze Projektbeschreibung
-  --python-version TEXT     Minimale Python-Version (z. B. 3.11)
-  --dry-run                 Vorschau ohne Dateien zu schreiben
+  -t, --template TEXT       Template (default: minimal)
+  -o, --output-dir PATH     Parent directory for the new project
+  --author TEXT             Author name
+  --description TEXT        Short project description
+  --python-version TEXT     Minimum Python version (e.g. 3.11)
+  --dry-run                 Preview without writing files
 ```
 
-**Beispiele**
+**Examples**
 
 ```bash
-# Minimales Projekt im aktuellen Verzeichnis
+# Minimal project in the current directory
 ig scaffold my-lib
 
-# Genesis-Preset mit benutzerdefiniertem Autor
+# Genesis preset with a custom author
 ig scaffold my-physics-tool --template genesis --author "Ada Lovelace"
 
-# Vorschau anzeigen (keine Dateien schreiben)
+# Preview (no files written)
 ig scaffold my-lib --dry-run
 
-# In einem bestimmten Verzeichnis erstellen
+# Create in a specific directory
 ig scaffold my-lib --output-dir ~/projects
 ```
 
@@ -43,7 +43,7 @@ ig scaffold my-lib --output-dir ~/projects
 
 ## `ig list-templates`
 
-Alle verfügbaren Templates mit Beschreibungen anzeigen.
+List all available templates with descriptions.
 
 ```bash
 ig list-templates
@@ -53,31 +53,31 @@ ig list-templates
 
 ## `ig validate`
 
-Projektverzeichnis gegen Implosive-Genesis-Best-Practices validieren.
+Validate a project directory against Implosive Genesis best practices.
 
 ```
 Usage: ig validate [PATH]
 
 Arguments:
-  PATH  Zu validierendes Projektverzeichnis [Standard: aktuelles Verzeichnis]
+  PATH  Project directory to validate [default: current directory]
 ```
 
-Durchgeführte Prüfungen:
+Checks performed:
 
-| Prüfung | Schweregrad |
-|---------|-------------|
-| `pyproject.toml` vorhanden | **Fehler** |
-| `src/`-Layout vorhanden | Warnung |
-| `tests/`-Verzeichnis vorhanden | Warnung |
-| `.github/workflows/` vorhanden | Warnung |
-| `README.md` vorhanden | Warnung |
-| `.gitignore` vorhanden | Warnung |
+| Check | Severity |
+|-------|----------|
+| `pyproject.toml` present | **Error** |
+| `src/` layout present | Warning |
+| `tests/` directory present | Warning |
+| `.github/workflows/` present | Warning |
+| `README.md` present | Warning |
+| `.gitignore` present | Warning |
 
 ```bash
-# Aktuelles Verzeichnis validieren
+# Validate current directory
 ig validate
 
-# Bestimmtes Projekt validieren
+# Validate a specific project
 ig validate path/to/my-project
 ```
 
@@ -85,7 +85,7 @@ ig validate path/to/my-project
 
 ## `ig version`
 
-Installierte Version anzeigen.
+Show the installed version.
 
 ```bash
 ig version

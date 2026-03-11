@@ -1,20 +1,20 @@
-# Tesseract-Visualisierung (v0.2.0)
+# Tesseract Visualisation (v0.2.0)
 
-Die **Tesseract-Visualisierung** rendert die 4-dimensionale Zeitstruktur des
-Implosiven-Genesis-Rahmens als interaktive matplotlib-Figure mit drei Panels:
+The **Tesseract Visualisation** renders the 4-dimensional time structure of the
+Implosive Genesis framework as an interactive matplotlib figure with three panels:
 
-1. **CREP-Heatmap**: $P_E(n, T)$ über Rekursionsstufen $n$ und Temperaturfaktoren
-2. **CREP-Balkendiagramm**: CREP-Werte pro Stufe (log-skaliert)
-3. **Log-Phi-Skalierung**: $\ln(T_n)$ vs. $\ln(\Phi^{n/3})$
+1. **CREP Heatmap**: $P_E(n, T)$ over recursion levels $n$ and temperature factors
+2. **CREP Bar Chart**: CREP values per level (log-scaled)
+3. **Log-Phi Scaling**: $\ln(T_n)$ vs. $\ln(\Phi^{n/3})$
 
-## Kern-Formeln
-
-$$
-T_n = t_0 \cdot \Phi^n \qquad \text{(Zeitscheibe)}
-$$
+## Core Formulae
 
 $$
-V_{4D}(n) = T_n^4 = t_0^4 \cdot \Phi^{4n} \qquad \text{(4D-Volumen)}
+T_n = t_0 \cdot \Phi^n \qquad \text{(time slice)}
+$$
+
+$$
+V_{4D}(n) = T_n^4 = t_0^4 \cdot \Phi^{4n} \qquad \text{(4D volume)}
 $$
 
 $$
@@ -22,10 +22,10 @@ $$
 $$
 
 $$
-P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi) \qquad \text{(entropischer Preis)}
+P_E(n, T) = n \cdot k_B \cdot T \cdot \ln(\Phi) \qquad \text{(entropic price)}
 $$
 
-## Tesseract-Zeitscheiben
+## Tesseract Time Slices
 
 | $n$ | $T_n = \Phi^n$ | $V_{4D}(n) = \Phi^{4n}$ |
 |-----|----------------|--------------------------|
@@ -38,57 +38,57 @@ $$
 | 6 | 17.944 | 103682 |
 | 7 | 29.034 | 710647 |
 
-## Frame-Buffer-Konzept
+## Frame-Buffer Concept
 
-Jede Zeitscheibe $T_n$ entspricht einem **Frame-Buffer** in der Tesseract-Struktur.
-Die CREP-Heatmap zeigt, wie der entropische Preis über verschiedene
-Temperaturskalen (T/2, T, 2T) skaliert.
+Each time slice $T_n$ corresponds to a **frame buffer** in the Tesseract structure.
+The CREP heatmap shows how the entropic price scales across different
+temperature scales (T/2, T, 2T).
 
-## Python-API
+## Python API
 
 ```python
 from implosive_genesis.simulation.tesseract_render import TesseractRenderer, render_tesseract
 
-# Renderer konfigurieren
+# Configure renderer
 renderer = TesseractRenderer(n_max=7, temperature=2.725)
 
-# ASCII-Vorschau (kein matplotlib nötig)
+# ASCII preview (no matplotlib required)
 print(renderer.ascii_preview())
 
-# Figure rendern
+# Render figure
 fig = renderer.render()
 
-# Als PNG speichern (300 DPI)
+# Save as PNG (300 DPI)
 renderer.dpi = 300
 saved = renderer.save("tesseract_output.png")
-print(f"Gespeichert: {saved}")
+print(f"Saved: {saved}")
 
-# Convenience-Funktion
+# Convenience function
 data = render_tesseract(n_max=7, save_path="tesseract.png")
 print(data.time_slices)
 ```
 
-## CLI-Nutzung
+## CLI Usage
 
 ```bash
-# ASCII-Vorschau (schnell, kein matplotlib)
+# ASCII preview (fast, no matplotlib)
 ig tesseract-render --ascii
 
-# PNG speichern
+# Save as PNG
 ig tesseract-render --save png
 
-# PDF speichern mit angepasstem n_max
+# Save as PDF with custom n_max
 ig tesseract-render --save tesseract.pdf --n-max 10
 
-# Spezifischen Dateipfad angeben
+# Specify a custom file path
 ig tesseract-render --save /tmp/my_tesseract.png
 ```
 
-### Beispiel-Ausgabe (`--ascii`)
+### Example Output (`--ascii`)
 
 ```
 ╭─────────────────────────────────────────────────────────────────╮
-│ Tesseract-Visualisierung  (n_max=7, T=2.725 K, Φ=1.618034)    │
+│ Tesseract Visualisation  (n_max=7, T=2.725 K, Φ=1.618034)      │
 ╰─────────────────────────────────────────────────────────────────╯
 
  n  │  T_n          │  P_E [J]     │  CREP
@@ -102,56 +102,56 @@ ig tesseract-render --save /tmp/my_tesseract.png
  6 │   1.7944e+01 │   2.1320e-23 │   1.2845e-38
  7 │   2.9034e+01 │   2.4874e-23 │   1.4986e-38
 
-Tipp: Verwende --save png um die Visualisierung zu speichern.
+Tip: Use --save png to save the visualisation.
 ```
 
-## CMB-Falsifikation
+## CMB Falsification
 
 ```bash
-# Standard-Test (5000 Simulationen)
+# Default test (5000 simulations)
 ig cmb-test
 
-# Mit Reproduzierbarkeit
+# With reproducibility seed
 ig cmb-test --n-sim 5000 --seed 42
 
-# Strengeres Signifikanzniveau
+# Stricter significance level
 ig cmb-test --alpha 0.01 --n-sim 10000
 ```
 
-### Beispiel-Ausgabe (`ig cmb-test`)
+### Example Output (`ig cmb-test`)
 
 ```
 ╭─────────────────────────────────────────────────────────────────────╮
-│ CMB-Falsifikationstest  (n_sim=5,000, V_RIG=1352.0 km/s,          │
-│ v_CMB=369.82 km/s)                                                  │
+│ CMB Falsification Test  (n_sim=5,000, V_RIG=1352.0 km/s,           │
+│ v_CMB=369.82 km/s)                                                   │
 ╰─────────────────────────────────────────────────────────────────────╯
 
-  Parameter             Wert         Einheit / Info
-  V_RIG (Modell)        1352.00      km/s
+  Parameter             Value        Unit / Info
+  V_RIG (model)         1352.00      km/s
   v_CMB (Planck 2018)    369.82      km/s
-  E[v] unter Modell      676.00      km/s (V_RIG/2)
-  μ_MC (Mittelwert)      675.83      km/s
+  E[v] under model       676.00      km/s (V_RIG/2)
+  μ_MC (mean)            675.83      km/s
   σ_MC                   390.41      km/s
   |μ - v_CMB|            306.01      km/s (0.78σ)
-  n_konsistent           1247        von 5,000
-  Toleranz                 1.33      km/s (3σ + 1 km/s)
-  p-Wert                 0.249400    α = 0.05
+  n_consistent           1247        of 5,000
+  tolerance                1.33      km/s (3σ + 1 km/s)
+  p-value                0.249400    α = 0.05
 
-Urteil: NICHT FALSIFIZIERT (p=0.2494 ≥ α=0.05)
+Verdict: NOT FALSIFIED (p=0.2494 ≥ α=0.05)
 ```
 
 ## Interpretation
 
-Das CMB-Falsifikationsmodell nimmt an, dass die beobachtete CMB-Dipolgeschwindigkeit
-die projizierte Komponente von V_RIG ist ($v_{\text{obs}} = V_{\text{RIG}} \cdot \cos\theta$,
-gleichverteilter Winkel $\theta$). Der p-Wert gibt an, welcher Anteil der
-Monte-Carlo-Simulationen in einem Toleranzband um $v_{\text{CMB}}$ liegt.
+The CMB falsification model assumes that the observed CMB dipole velocity is the
+projected component of V_RIG ($v_{\text{obs}} = V_{\text{RIG}} \cdot \cos\theta$,
+uniformly distributed angle $\theta$). The p-value indicates what fraction of the
+Monte Carlo simulations falls within a tolerance band around $v_{\text{CMB}}$.
 
-Ein hoher p-Wert (≥ α = 0.05) bedeutet: Das Modell ist **nicht falsifiziert**
-auf dem gewählten Signifikanzniveau – die Hypothese V_RIG ≈ 1352 km/s ist
-mit dem CMB-Dipol vereinbar.
+A high p-value (≥ α = 0.05) means: the model is **not falsified** at the chosen
+significance level – the hypothesis V_RIG ≈ 1352 km/s is consistent with the
+CMB dipole.
 
-## Referenzen
+## References
 
 - Planck Collaboration (2018). *Planck 2018 results I – Overview and the cosmological legacy*.
   A&A 641, A1. arXiv:1807.06205.

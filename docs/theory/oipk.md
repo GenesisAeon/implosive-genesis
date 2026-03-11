@@ -1,93 +1,91 @@
-# OIPK – Orthogonaler Impuls-Photonen-Kern
+# OIPK – Orthogonal Impulse Photon Kernel
 
-Der **Orthogonale Impuls-Photonen-Kern** (OIPK, engl. *Orthogonal Impulse
-Photon Kernel*) ist das fundamentale photonische Strukturelement des
-Implosive-Genesis-Rahmens. Er definiert die kleinste Einheit, aus der
-stabile Bezugsrahmen (Frames) entstehen können.
-
----
-
-## Konzept
-
-In der implosiven Feldtheorie entstehen Raum-Zeit-Frames nicht kontinuierlich,
-sondern durch diskrete Quanten-Ereignisse: **Orthogonale Impulse** zwischen
-Photonen-Kernen. Der OIPK ist durch drei Parameter vollständig charakterisiert:
-
-1. **Wellenlänge** $\lambda_{OIPK}$ – die räumliche Grundskala des Frames
-2. **Alpha-Phi** $\alpha_\Phi$ – die Phi-skalierte Kopplungsstärke
-3. **Orthogonalitätswinkel** $\theta_\perp$ – der charakteristische Gitterwinkel
+The **Orthogonal Impulse Photon Kernel** (OIPK) is the fundamental photonic
+structural element of the Implosive Genesis framework. It defines the smallest
+unit from which stable reference frames can emerge.
 
 ---
 
-## Physikalische Bedeutung
+## Concept
 
-### Wellenlänge und V_RIG
+In implosive field theory, space-time frames do not arise continuously
+but through discrete quantum events: **orthogonal impulses** between photon
+kernels. The OIPK is fully characterised by three parameters:
 
-Die Standard-OIPK-Wellenlänge ergibt sich direkt aus der
-Implosionsgeschwindigkeit $V_{RIG}$:
+1. **Wavelength** $\lambda_{OIPK}$ – the spatial base scale of the frame
+2. **Alpha-Phi** $\alpha_\Phi$ – the Phi-scaled coupling strength
+3. **Orthogonality angle** $\theta_\perp$ – the characteristic lattice angle
+
+---
+
+## Physical Significance
+
+### Wavelength and V_RIG
+
+The default OIPK wavelength follows directly from the implosion velocity
+$V_{RIG}$:
 
 $$\lambda_{OIPK} = \frac{c}{V_{RIG}}$$
 
-Dies verbindet das OIPK-Konzept mit der empirisch bestimmten
-Grundgröße $V_{RIG} \approx 1352\ \text{km/s}$.
+This connects the OIPK concept to the empirically determined base quantity
+$V_{RIG} \approx 1352\ \text{km/s}$.
 
-### Energie-Dichte
+### Energy Density
 
-Die Energie eines OIPK-Quants ist durch das Produkt aus Planckscher
-Wirkung, Winkelfrequenz und Phi-Skalierung gegeben:
+The energy of an OIPK quantum is given by the product of the reduced Planck
+constant, angular frequency and Phi-scaling:
 
 $$E_{OIPK} = \hbar \cdot \omega_F \cdot \alpha_\Phi$$
 
 $$\omega_F = \frac{2\pi c}{\lambda_{OIPK}}$$
 
-### Stabilitätskriterium
+### Stability Criterion
 
-Die Frame-Stabilität misst, wie robust ein Frame gegenüber
-Quantenfluktuationen ist:
+Frame stability measures how robust a frame is against quantum fluctuations:
 
 $$S_F = \frac{\Phi^2}{\alpha_\Phi} \approx 221.9$$
 
-Der hohe Wert $S_F \gg 1$ erklärt, warum makroskopische Frames stabil
-erscheinen, obwohl sie mikroskopisch aus diskreten OIPK-Ereignissen bestehen.
+The large value $S_F \gg 1$ explains why macroscopic frames appear stable
+even though they are microscopically composed of discrete OIPK events.
 
-### Goldener-Schnitt-Gitter
+### Golden-Ratio Lattice
 
-Der Orthogonalitätswinkel ist kein Zufall:
+The orthogonality angle is no coincidence:
 
 $$\cos(\theta_\perp) = -\frac{1}{\Phi}$$
 
-Dies ist äquivalent zur Goldenen-Schnitt-Bedingung für quasiperiodische
-Gitter (Penrose-Tiling). Das OIPK-Gitter ist damit optimal gegen
-Resonanzkollaps geschützt.
+This is equivalent to the golden-ratio condition for quasi-periodic
+lattices (Penrose tiling). The OIPK lattice is therefore optimally
+protected against resonance collapse.
 
 ---
 
-## Rekursive Strukturen
+## Recursive Structures
 
-Über die `FramePrinciple`-Klasse werden OIPK-Eigenschaften rekursiv
-auf Stufe $n$ skaliert:
+Via the `FramePrinciple` class, OIPK properties are scaled recursively
+to level $n$:
 
-| Größe | Formel | Beschreibung |
-|---|---|---|
-| $L_n$ | $\lambda_{OIPK} \cdot \Phi^{n/3}$ | Kohärenzlänge |
-| $I_n$ | $E_{OIPK} \cdot \Phi^{n/3}$ | Impulsenergie |
-| $S_F(n)$ | $S_F \cdot \Phi^{n/3}$ | Effektive Stabilität |
+| Quantity | Formula | Description |
+|----------|---------|-------------|
+| $L_n$ | $\lambda_{OIPK} \cdot \Phi^{n/3}$ | Coherence length |
+| $I_n$ | $E_{OIPK} \cdot \Phi^{n/3}$ | Impulse energy |
+| $S_F(n)$ | $S_F \cdot \Phi^{n/3}$ | Effective stability |
 
 ---
 
-## API-Referenz
+## API Reference
 
 ```python
 from implosive_genesis.theory.frameprinciple import OIPKernel, FramePrinciple
 
-# Standard-OIPK (λ von V_RIG abgeleitet)
+# Default OIPK (λ derived from V_RIG)
 kernel = OIPKernel()
 print(f"ω_F  = {kernel.angular_frequency():.4e} rad/s")
 print(f"E    = {kernel.energy():.4e} J")
 print(f"S_F  = {kernel.frame_stability():.4f}")
 print(f"θ_⊥  = {kernel.orthogonality_angle_deg():.4f}°")
 
-# Frame-Prinzip: Rekursive Größen
+# Frame Principle: recursive quantities
 fp = FramePrinciple(kernel=kernel)
 for n in range(5):
     print(f"n={n}: L_n={fp.coherence_length(n):.4e} m, I_n={fp.impulse_energy(n):.4e} J")
@@ -95,7 +93,7 @@ for n in range(5):
 
 ---
 
-## Zusammenhang mit anderen Modulen
+## Relationship to Other Modules
 
 ```
 OIPKernel
@@ -108,7 +106,7 @@ OIPKernel
 
 ---
 
-## Referenz
+## Reference
 
-- Modul: `implosive_genesis.theory.frameprinciple`
-- Verwandte Konzepte: [Frame-Prinzip](frameprinciple.md), [Tesseract](tesseract.md)
+- Module: `implosive_genesis.theory.frameprinciple`
+- Related concepts: [Frame Principle](frameprinciple.md), [Tesseract](tesseract.md)
