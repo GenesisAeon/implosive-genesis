@@ -79,12 +79,10 @@ uv add implosive-genesis==0.4.0
   title     = {Implosive Genesis – Fraktale Rendering-Engine & Chronologie-Abschluss},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.[DOI-HIER-EINFÜGEN]},
+  doi       = {10.5281/zenodo.18956822},
   url       = {https://github.com/GenesisAeon/implosive-genesis/releases/tag/v0.4.0}
 }
 ```
-
-> Den finalen DOI nach dem Zenodo-Publish in README und docs/index.md einfügen.
 
 ---
 
