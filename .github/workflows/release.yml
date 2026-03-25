@@ -3,56 +3,77 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write
 
 jobs:
-  release:
-    name: Create GitHub Release
+  build:
+    name: Build distribution
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install build tools
+        run: pip install build
+      - name: Build wheel and sdist
+        run: python -m build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
-      - name: Create GitHub Release v0.2.0
-        if: github.ref_name == 'v0.2.0'
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create GitHub Release
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "v0.2.0 – Formalisierung & Falsifizierbarkeit"
-          body_path: RELEASE_NOTES_v0.2.0.md
+          files: dist/*
+          generate_release_notes: true
           draft: false
-          prerelease: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
 
-      - name: Create GitHub Release (generic)
-        if: github.ref_name != 'v0.2.0'
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "${{ github.ref_name }} – Implosive Genesis"
-          body: |
-            ## Implosive Genesis ${{ github.ref_name }}
-
-            ### Kernmodule
-
-            - **V_RIG** – Rekursive Implosionsgeschwindigkeit ≈ 1352 km/s (Monte-Carlo)
-            - **OIPK** – Orthogonaler Impuls-Photonen-Kern + Frame-Stabilitätskriterium S_F ≈ 221.9
-            - **Frameprinciple** – Rekursive Kohärenzlängen L_n = λ · Φ^(n/3)
-            - **Tesseract** – Phi-skalierte Zeitscheiben T_n = t₀ · Φⁿ
-            - **CREP** – Collapse-Resonance-Entropy-Price P_E = n · k_B · T · ln(Φ)
-            - **Type-6** – Rekursive Selbstwahrnehmung als physikalischer Zustand
-
-            ### Installation
-
-            ```bash
-            pip install implosive-genesis==${{ github.ref_name }}
-            # oder
-            uv tool install implosive-genesis==${{ github.ref_name }}
-            ```
-
-            ### Dokumentation
-
-            [https://genesisaeon.github.io/implosive-genesis/](https://genesisaeon.github.io/implosive-genesis/)
-          draft: false
-          prerelease: false
+  publish-zenodo:
+    name: Publish to Zenodo
+    needs: github-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload to Zenodo
+        run: |
+          echo "Zenodo upload triggered for tag ${{ github.ref_name }}"
+          echo "Configure ZENODO_TOKEN secret and zenodraft/action for automatic upload."
+        # Replace with actual zenodo-upload action when token is configured:
+        # uses: zenodraft/action@main
+        # with:
+        #   concept-doi: 10.5281/zenodo.XXXXXXXX  # <- enter your concept DOI
+        #   token: ${{ secrets.ZENODO_TOKEN }}
