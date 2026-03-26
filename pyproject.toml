@@ -1,7 +1,7 @@
-[project]
+﻿[project]
 name = "implosive-genesis"
-version = "0.4.1"
-description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6, Fraktale Rendering-Engine)"
+version = "0.3.1"
+description = "Implosive Genesis â€“ rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6, Fraktale Rendering-Engine)"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "GenesisAeon" }]
@@ -78,4 +78,5 @@ omit = ["tests/*"]
 dev = [
     "pytest-cov>=7.0.0",
 ]
+
 
