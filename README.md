@@ -322,6 +322,23 @@ If you use Implosive Genesis in academic work, please cite the relevant version:
 }
 ```
 
+[![DOI v1.0.0](https://zenodo.org/badge/DOI/10.5281/zenodo.PLACEHOLDER.svg)](https://doi.org/10.5281/zenodo.PLACEHOLDER)
+
+DOI for v1.0.0 will be assigned automatically on the next GitHub Release
+once Zenodo–GitHub integration is enabled for this repo.
+
+---
+
+## Role in the GenesisAeon Ecosystem
+
+**implosive-genesis** provides the V_RIG / OIPK / Frameprinciple / Type-6
+formalisms and the fractal Tesseract rendering engine used as a foundation
+by several other packages in the GenesisAeon ecosystem (cosmology and
+recursive spacetime-emergence domain), including `fieldtheory`,
+`cosmic-moment`, `cosmic-web`, `entropy-governance`, `mandala-visualize`,
+`medium-modulation`, `mirror-machine`, `sigillin`, `sonification`, and
+`climate-dashboard`.
+
 ---
 
 Built with [uv](https://docs.astral.sh/uv/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/) · [MkDocs Material](https://squidfunk.github.io/mkdocs-material/)

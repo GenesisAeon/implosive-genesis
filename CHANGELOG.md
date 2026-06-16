@@ -5,6 +5,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), version
 
 ---
 
+## [1.0.0] – 2026
+
+**GenesisAeon ecosystem v1.0.0 milestone** – metadata and release tooling
+normalized as part of the ecosystem-wide v1.0.0 release.
+
+### Added
+- `.zenodo.json` Zenodo deposition metadata.
+- `RELEASE_GUIDE.md`, `CONTRIBUTING.md`, issue templates and PR template.
+
+### Changed
+- `pyproject.toml`: version bumped to `1.0.0`; fixed mojibake in
+  `description`.
+- `src/implosive_genesis/__init__.py`: `__version__` bumped to `1.0.0`.
+
+No breaking changes — all CLI commands and APIs from v0.4.0 remain
+compatible.
+
+---
+
 ## [0.4.0] – 2026-03-10
 
 **Fraktale Rendering-Engine & Chronologie-Abschluss** – vollständige 10-Teile-Chronologie validiert, rekursive Phi-skalierte Tesseract-Rendering-Engine, zentrale ImplosiveGenesis-Klasse als Einstiegspunkt für alle Module.
