@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "Implosive Genesis – rekursive Entstehung von Raum, Zeit und Bewusstsein (V_RIG, OIPK, Frameprinciple, Type-6, Fraktale Rendering-Engine)"
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "GenesisAeon" }]
+authors = [{ name = "Johann Römer" }]
 requires-python = ">=3.11"
 keywords = ["physics", "consciousness", "recursion", "spacetime", "implosion", "genesis"]
 classifiers = [
